@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   generateButton: {
-    backgroundColor: '#00bcd4',
+    backgroundColor: '#86e485',
     borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 40,
