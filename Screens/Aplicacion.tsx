@@ -64,7 +64,7 @@ const Aplicacion: React.FC = () => {
 
   return (
     <ImageBackground
-      source={require('../assets/bichosfondos.jpg')}
+      source={require('../assets/fondojueguito.jpg')}
       style={styles.container}
     >
       <Text style={styles.title}>¡Aplasta los insectos!</Text>
