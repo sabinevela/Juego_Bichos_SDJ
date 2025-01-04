@@ -16,7 +16,7 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
       
       <TouchableOpacity 
         style={styles.botonEmpezar} 
-        onPress={() => navigation.navigate('LoginScreen')}
+        onPress={() => navigation.navigate('Login')}
       >
         <Text style={styles.buttonText}>¡Empezar!</Text>
       </TouchableOpacity>

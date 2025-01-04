@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image, Animated } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
+
 
 const insectImages = [
   require('../assets/mariquita.jpg'),
@@ -10,6 +12,7 @@ const insectImages = [
 const Aplicacion: React.FC = () => {
   const [score, setScore] = useState(0);
   const [insects, setInsects] = useState<Array<any>>([]);
+
   useEffect(() => {
     generateInsects();
   }, []);
@@ -21,8 +24,8 @@ const Aplicacion: React.FC = () => {
     for (let i = 0; i < numInsects; i++) {
       newInsects.push({
         id: i,
-        left: new Animated.Value(Math.random() * 300),
-        top: new Animated.Value(Math.random() * 600),
+        left: new Animated.Value(Math.random() * 300),  
+        top: new Animated.Value(Math.random() * 600),  
         image: insectImages[Math.floor(Math.random() * insectImages.length)],
       });
     }
@@ -43,19 +46,19 @@ const Aplicacion: React.FC = () => {
         Animated.timing(insect.left, {
           toValue: Math.random() * 300,
           duration: 1500,
-          useNativeDriver: true,
+          useNativeDriver: false, 
         }),
         Animated.timing(insect.top, {
           toValue: Math.random() * 600,
           duration: 1500,
-          useNativeDriver: true,
+          useNativeDriver: false, 
         }),
       ])
     ).start();
   };
 
   const aplastarInsecto = (id: number) => {
-    setScore(score + 1);
+    setScore(prevScore => prevScore + 1);
     setInsects(insects.filter(insect => insect.id !== id));
   };
 
@@ -67,14 +70,22 @@ const Aplicacion: React.FC = () => {
       <Text style={styles.title}>¡Aplasta los insectos!</Text>
       <Text style={styles.score}>Puntaje: {score}</Text>
 
-      <TouchableOpacity style={styles.generateButton} onPress={() => generateInsects()}>
+      <TouchableOpacity style={styles.generateButton} onPress={generateInsects}>
         <Text style={styles.generateButtonText}>Aumentar Insectos</Text>
       </TouchableOpacity>
 
       {insects.map(insect => (
         <Animated.View
           key={insect.id}
-          style={[styles.insect, { left: insect.left, top: insect.top }]}
+          style={[
+            styles.insect,
+            { 
+              transform: [
+                { translateX: insect.left },
+                { translateY: insect.top }
+              ]
+            }
+          ]}
         >
           <TouchableOpacity onPress={() => aplastarInsecto(insect.id)}>
             <Image source={insect.image} style={styles.insectImage} />
