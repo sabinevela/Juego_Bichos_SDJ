@@ -5,7 +5,7 @@ type LoginProps = {
   navigation: any;
 };
 
-const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
+const Inicio: React.FC<LoginProps> = ({ navigation }) => {
   const [username, setUsername] = useState<string>('');
 
   const handleLogin = () => {
@@ -113,5 +113,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Inicio;
 

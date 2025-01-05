@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-native';
 import { Animated, TouchableOpacity } from 'react-native';
+import { ref, set } from 'firebase/database';  // Asegúrate de importar las funciones de Firebase
+import { db } from '../Config/Config';  // Asegúrate de importar tu archivo de configuración
 
 const insectImages = [
   require('../assets/mariquita.jpg'),
@@ -29,14 +31,14 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     for (let i = 0; i < numInsects; i++) {
       newInsects.push({
         id: i,
-        left: new Animated.Value(Math.random() * 300),  
-        top: new Animated.Value(Math.random() * 600),  
+        left: new Animated.Value(Math.random() * 300),
+        top: new Animated.Value(Math.random() * 600),
         image: insectImages[Math.floor(Math.random() * insectImages.length)],
       });
     }
 
     setInsects(newInsects);
-    moveInsects(newInsects); 
+    moveInsects(newInsects);
   };
 
   const moveInsects = (insects: Array<any>) => {
@@ -51,12 +53,12 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         Animated.timing(insect.left, {
           toValue: Math.random() * 300,
           duration: 1500,
-          useNativeDriver: false, 
+          useNativeDriver: false,
         }),
         Animated.timing(insect.top, {
           toValue: Math.random() * 600,
           duration: 1500,
-          useNativeDriver: false, 
+          useNativeDriver: false,
         }),
       ])
     ).start();
@@ -68,11 +70,20 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   };
 
   const handleEndGame = () => {
-    Alert.alert(
-      "Juego terminado",
-      `¡${username}, tu puntaje final es: ${score}!`,
-      [{ text: "OK", onPress: () => navigation.navigate("Welcome") }]
-    );
+    // Guardar el puntaje en Firebase
+    const scoreRef = ref(db, 'scores/' + username);
+    set(scoreRef, {
+      nombre: username,
+      score: score,
+    }).then(() => {
+      Alert.alert(
+        "Juego terminado",
+        `¡${username}, tu puntaje final es: ${score}!`,
+        [{ text: "OK", onPress: () => navigation.navigate("Welcome") }]
+      );
+    }).catch((error) => {
+      Alert.alert('Error al guardar el score: ' + error.message);
+    });
   };
 
   return (

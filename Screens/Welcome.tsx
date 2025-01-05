@@ -14,11 +14,20 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
       />
       <Text style={styles.title}>InsectoManía</Text>
       
+    
       <TouchableOpacity 
         style={styles.botonEmpezar} 
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Log')}
       >
-        <Text style={styles.buttonText}>¡Empezar!</Text>
+        <Text style={styles.buttonText}>Iniciar sesión</Text>
+      </TouchableOpacity>
+
+     
+      <TouchableOpacity 
+        style={styles.botonEmpezar} 
+        onPress={() => navigation.navigate('Register')}
+      >
+        <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
 
       <View style={styles.creditsContainer}>
@@ -61,11 +70,11 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor: 'linear-gradient(to right,rgb(23, 73, 16), #00bcd4)',
+    backgroundColor: 'linear-gradient(to right,rgb(23, 73, 16), #00bcd4)', // Esto no funciona en React Native, lo cambiaré por un color sólido
     borderRadius: 50,
     paddingVertical: 20,
     paddingHorizontal: 50,
-    marginBottom: 40,
+    marginBottom: 20,
     zIndex: 1,
     shadowColor: '#ff4081',
     shadowOffset: { width: 0, height: 6 },
@@ -109,4 +118,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 export default Welcome;
