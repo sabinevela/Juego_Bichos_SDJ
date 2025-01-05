@@ -21,9 +21,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Log" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Aplicacion" component={Aplicacion} />
-      
-        
+        <Stack.Screen name="Aplicacion" component={Aplicacion} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
