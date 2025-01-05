@@ -5,18 +5,17 @@ import { db } from '../Config/Config';
 
 const LoginScreen = ({ navigation }: any) => {
   const [name, setName] = useState('');
-  const [password, setPassword] = useState('');  // Cambié 'email' por 'password'
+  const [password, setPassword] = useState(''); 
 
   const handleLogin = () => {
-    if (name && password) {  // Verifica que el nombre de usuario y la contraseña estén completos
-      const userRef = ref(db, 'usuarios/' + name);  // Accede al nodo de usuario en Firebase
+    if (name && password) { 
+      const userRef = ref(db, 'usuarios/' + name); 
 
       get(userRef).then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          if (userData.password === password) {  // Verifica que la contraseña coincida
+          if (userData.password === password) {  
             alert('Login exitoso');
-            // Navega a la pantalla "Aplicacion" y pasa el username
             navigation.navigate('Aplicacion', { username: name });
           } else {
             alert('Contraseña incorrecta');
@@ -45,7 +44,7 @@ const LoginScreen = ({ navigation }: any) => {
         placeholder="Contraseña"
         value={password}
         onChangeText={setPassword}
-        secureTextEntry  // Esto oculta la contraseña
+        secureTextEntry
       />
       <Button title="Iniciar sesión" onPress={handleLogin} />
       <Text style={styles.registerText} onPress={() => navigation.navigate('Register')}>

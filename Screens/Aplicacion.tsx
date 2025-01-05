@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-native';
 import { Animated, TouchableOpacity } from 'react-native';
-import { ref, set } from 'firebase/database';  // Asegúrate de importar las funciones de Firebase
-import { db } from '../Config/Config';  // Asegúrate de importar tu archivo de configuración
+import { ref, set } from 'firebase/database'; 
+import { db } from '../Config/Config';  
 
 const insectImages = [
   require('../assets/mariquita.jpg'),
@@ -70,7 +70,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   };
 
   const handleEndGame = () => {
-    // Guardar el puntaje en Firebase
     const scoreRef = ref(db, 'scores/' + username);
     set(scoreRef, {
       nombre: username,
