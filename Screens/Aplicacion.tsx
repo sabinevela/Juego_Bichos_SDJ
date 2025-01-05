@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-native';
 import { Animated, TouchableOpacity } from 'react-native';
-import { ref, set } from 'firebase/database';  // Asegúrate de importar las funciones de Firebase
-import { db } from '../Config/Config';  // Asegúrate de importar tu archivo de configuración
+import { ref, set } from 'firebase/database';
+import { db } from '../Config/Config';  
+import Playerrr from './Playerrr';
 
 const insectImages = [
-  require('../assets/mariquita.jpg'),
-  require('../assets/mosca.jpg'),
-  require('../assets/abeja.jpg'),
+  require('../Imagenes/Insecto1.jpeg'),
+  require('../Imagenes/Insecto2.jpeg'),
+  require('../Imagenes/Insecto3.jpeg'),
+  require('../Imagenes/Insecto4.jpeg'),
 ];
 
 type AplicacionProps = {
@@ -19,10 +21,24 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const { username } = route.params;
   const [score, setScore] = useState(0);
   const [insects, setInsects] = useState<Array<any>>([]);
+  const [timeLeft, setTimeLeft] = useState(60); 
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     generateInsects();
   }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleEndGame();
+    } else {
+      const timer = setInterval(() => {
+        setTimeLeft(prevTime => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
 
   const generateInsects = () => {
     const numInsects = Math.floor(Math.random() * 5) + 3;
@@ -65,12 +81,14 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   };
 
   const aplastarInsecto = (id: number) => {
-    setScore(prevScore => prevScore + 1);
-    setInsects(insects.filter(insect => insect.id !== id));
+    if (!gameOver) {
+      setScore(prevScore => prevScore + 1);
+      setInsects(insects.filter(insect => insect.id !== id));
+    }
   };
 
   const handleEndGame = () => {
-    // Guardar el puntaje en Firebase
+    setGameOver(true); 
     const scoreRef = ref(db, 'scores/' + username);
     set(scoreRef, {
       nombre: username,
@@ -88,11 +106,12 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../assets/fondojueguito.jpg')}
+      source={require('../Imagenes/descarga.jpeg')}
       style={styles.container}
     >
       <Text style={styles.title}>¡Aplasta los insectos!</Text>
       <Text style={styles.score}>Puntaje: {score}</Text>
+      <Text style={styles.time}>Tiempo Restante: {timeLeft} segundos</Text>
       <Text style={styles.username}>Jugador: {username}</Text>
 
       <TouchableOpacity style={styles.generateButton} onPress={generateInsects}>
@@ -103,17 +122,21 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         <Text style={styles.endButtonText}>Terminar Intento</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Playerrr')}>
+        <Text style={styles.endButtonText}>Ver Puntuacion</Text>
+      </TouchableOpacity>
+
       {insects.map(insect => (
         <Animated.View
           key={insect.id}
           style={[
             styles.insect,
-            { 
+            {
               transform: [
                 { translateX: insect.left },
-                { translateY: insect.top }
-              ]
-            }
+                { translateY: insect.top },
+              ],
+            },
           ]}
         >
           <TouchableOpacity onPress={() => aplastarInsecto(insect.id)}>
@@ -152,6 +175,12 @@ const styles = StyleSheet.create({
     textShadowColor: '#4afc48',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
+  },
+  time: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFD700',
+    marginBottom: 20,
   },
   username: {
     fontSize: 20,
