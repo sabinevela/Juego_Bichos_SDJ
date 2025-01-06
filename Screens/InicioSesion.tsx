@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }: any) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           if (userData.password === password) {
-            Alert.alert('Login exitoso', '¡Bienvenido al Juego!');
+            Alert.alert('¡Bienvenido al Juego!','Empieza a matar insectos');
             navigation.navigate('Aplicacion', { username: name });
           } else {
             Alert.alert('Error', 'Contraseña incorrecta.');
