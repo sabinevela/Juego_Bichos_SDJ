@@ -23,7 +23,7 @@ const Puntaje = ({ navigation }: { navigation: any }) => {
         }
       })
       .catch(error => {
-        console.error(error);
+        console.error(error); 
       });
   }, []);
 
