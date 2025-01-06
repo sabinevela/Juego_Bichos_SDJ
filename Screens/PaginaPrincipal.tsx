@@ -1,4 +1,3 @@
-//rnfs
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 
@@ -8,9 +7,9 @@ type PaginaPrincipalProps = {
 
 const insectos = [
   { nombre: 'Luciernaga', imagen: require('../Imagenes/Insecto1.jpeg') },
-  { nombre: 'Abeja', imagen: require('../Imagenes/Insecto2.jpeg') },
-  { nombre: 'Mariposa', imagen: require('../Imagenes/Insecto3.jpeg') },
-  { nombre: 'Mosca', imagen: require('../Imagenes/Insecto4.jpeg') },
+  { nombre: 'Mosca', imagen: require('../Imagenes/Insecto2.jpeg') },
+  { nombre: 'Abeja', imagen: require('../Imagenes/Insecto3.jpeg') },
+  { nombre: 'Mariposa', imagen: require('../Imagenes/Insecto4.jpeg') },
   
 ];
 

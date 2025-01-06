@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
 import { ref, get } from 'firebase/database';
 import { db } from '../Config/Config';
 
-const Puntaje = () => {
+const Puntaje = ({ navigation }: { navigation: any }) => {
   const [scores, setScores] = useState<any[]>([]);
 
   useEffect(() => {
@@ -12,7 +12,11 @@ const Puntaje = () => {
       .then(snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          const scoresList = Object.values(data);
+          const scoresList = Object.entries(data).map(([key, value]) => {
+            return typeof value === 'object' && value !== null
+              ? { id: key, ...value }
+              : { id: key, value };
+          });
           setScores(scoresList);
         } else {
           console.log("No data available");
@@ -25,7 +29,7 @@ const Puntaje = () => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo4.jpeg')} 
+      source={require('../Imagenes/Fondo4.jpeg')}
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
@@ -39,7 +43,7 @@ const Puntaje = () => {
 
         <FlatList
           data={scores}
-          keyExtractor={(index) => index.toString()}
+          keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <View style={styles.scoreItem}>
               <Text style={styles.rank}>{index + 1}</Text>
@@ -48,6 +52,13 @@ const Puntaje = () => {
             </View>
           )}
         />
+
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate('PaginaPrincipal')}
+        >
+          <Text style={styles.backButtonText}>Regresar al Inicio</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -56,14 +67,14 @@ const Puntaje = () => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    resizeMode: 'cover', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'cover',
   },
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     borderRadius: 10,
     width: '100%',
     justifyContent: 'center',
@@ -134,6 +145,19 @@ const styles = StyleSheet.create({
     color: '#fff',
     width: 80,
     textAlign: 'center',
+  },
+  backButton: {
+    backgroundColor: '#ff6347',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 25,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  backButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
