@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo1.jpeg')} // Reemplaza con la ruta a tu imagen
+      source={require('../Imagenes/Fondo1.jpeg')} 
       style={styles.background}
       resizeMode="cover"
     >

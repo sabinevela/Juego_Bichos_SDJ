@@ -6,7 +6,6 @@ type PaginaPrincipalProps = {
   navigation: any;
 };
 
-// Lista de insectos con nombres e imágenes
 const insectos = [
   { nombre: 'Luciernaga', imagen: require('../Imagenes/Insecto1.jpeg') },
   { nombre: 'Abeja', imagen: require('../Imagenes/Insecto2.jpeg') },

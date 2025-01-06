@@ -31,14 +31,12 @@ const Puntaje = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Puntuaciones de Jugadores:</Text>
 
-        {/* Títulos de la lista */}
         <View style={styles.header}>
           <Text style={[styles.headerText, styles.headerRank]}>Número</Text>
           <Text style={[styles.headerText, styles.headerName]}>Nombre</Text>
           <Text style={[styles.headerText, styles.headerScore]}>Score</Text>
         </View>
 
-        {/* Lista de puntuaciones */}
         <FlatList
           data={scores}
           keyExtractor={(index) => index.toString()}
