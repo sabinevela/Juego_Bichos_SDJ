@@ -8,10 +8,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Aplicacion from '../Screens/Aplicacion';
 
 
-
-
-
-
 const Stack = createStackNavigator();
 
 export default function AppNavegador() {
@@ -21,7 +17,9 @@ export default function AppNavegador() {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Log" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Aplicacion" component={Aplicacion} /> 
+        <Stack.Screen name="Aplicacion" component={Aplicacion} />
+      
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

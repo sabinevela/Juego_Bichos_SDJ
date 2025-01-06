@@ -2,26 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
-// Asegúrate de importar tu archivo de configuración
 
 const RegisterScreen = ({ navigation }: any) => {
-  const [userName, setUserName] = useState('');  // Cambié 'name' por 'userName'
+  const [userName, setUserName] = useState(''); 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // Estado para la contraseña
+  const [password, setPassword] = useState('');
 
   const handleRegister = () => {
-    if (userName && email && password) {  // Verifica que todos los campos estén llenos
-      // Crear una referencia a la base de datos en Firebase para el nuevo usuario
-      const userRef = ref(db, 'usuarios/' + userName);  // Cambié 'name' por 'userName'
-
-      // Guardar los datos en Firebase
+    if (userName && email && password) {
+      const userRef = ref(db, 'usuarios/' + userName); 
       set(userRef, {
-        userName: userName,  // Cambié 'nombre' por 'userName'
+        userName: userName,
         email: email,
-        password: password,  // Añadir la contraseña al registro
+        password: password,
       }).then(() => {
         alert('Usuario registrado exitosamente');
-        navigation.navigate('Log');  // Redirige al login después de registrar
+        navigation.navigate('Log');
       }).catch((error) => {
         alert('Error al registrar usuario: ' + error.message);
       });
@@ -35,9 +31,9 @@ const RegisterScreen = ({ navigation }: any) => {
       <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
-        placeholder="User Name"  // Cambié 'Nombre' por 'User Name'
-        value={userName}  // Cambié 'name' por 'userName'
-        onChangeText={setUserName}  // Cambié 'setName' por 'setUserName'
+        placeholder="User Name"
+        value={userName}
+        onChangeText={setUserName}
       />
       <TextInput
         style={styles.input}
@@ -50,7 +46,7 @@ const RegisterScreen = ({ navigation }: any) => {
         placeholder="Contraseña"
         value={password}
         onChangeText={setPassword}
-        secureTextEntry // Esto oculta la contraseña
+        secureTextEntry
       />
       <Button title="Registrar" onPress={handleRegister} />
     </View>

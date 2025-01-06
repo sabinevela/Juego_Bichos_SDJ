@@ -8,7 +8,6 @@ export default function App() {
    <AppNavegador/>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
