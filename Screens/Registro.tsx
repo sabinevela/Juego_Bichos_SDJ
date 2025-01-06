@@ -31,7 +31,7 @@ const RegisterScreen = ({ navigation }: any) => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo1.jpeg')} // Cambia esta ruta según la ubicación de tu imagen
+      source={require('../Imagenes/Fondo1.jpeg')} 
       style={styles.background}
       resizeMode="cover"
     >
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     paddingVertical: 15,
-    backgroundColor: '#007BFF', // Cambiado al color azul principal
+    backgroundColor: '#007BFF', 
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 20,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   loginLinkText: {
-    color: '#007BFF', // Cambiado al mismo azul que el botón
+    color: '#007BFF', 
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },

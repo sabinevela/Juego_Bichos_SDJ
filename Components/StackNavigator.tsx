@@ -5,7 +5,7 @@ import Welcome from '../Screens/Welcome';
 import LoginScreen from '../Screens/InicioSesion';
 import RegisterScreen from '../Screens/Registro';
 import Aplicacion from '../Screens/Aplicacion';
-import Playerrr from '../Screens/Playerrr'; // Asegúrate de tener la ruta correcta
+import Playerrr from '../Screens/Playerrr'; 
 
 const Stack = createStackNavigator();
 
