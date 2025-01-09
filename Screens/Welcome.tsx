@@ -9,7 +9,7 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/insectos.jpg')}
+        source={require('../Imagenes/Fondo4.jpeg')}
         style={styles.backgroundImage}
       />
       <Text style={styles.title}>InsectoManía</Text>
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   
   creditsContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
     padding: 20,
     borderRadius: 15, 
     alignItems: 'center',
@@ -112,10 +111,11 @@ const styles = StyleSheet.create({
   },
   course: {
     fontSize: 18,
-    color: '#fff',
+    color: '#a8ffa4',
     fontWeight: '600',
     marginTop: 5,
     textAlign: 'center',
+    
   },
 });
 
