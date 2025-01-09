@@ -7,6 +7,7 @@ import RegisterScreen from '../Screens/Registro';
 import Aplicacion from '../Screens/Aplicacion';
 import Puntaje from '../Screens/Playerrr';
 import PaginaPrincipal from '../Screens/PaginaPrincipal';
+import GitHub from '../Screens/GitHub';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Aplicacion" component={Aplicacion} />
         <Stack.Screen name="Playerrr" component={Puntaje} /> 
+        <Stack.Screen name="GitHub" component={GitHub}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

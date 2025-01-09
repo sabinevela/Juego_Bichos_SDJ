@@ -1,44 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 
-type WelcomeProps = {
-  navigation: any;
-};
-
-const Git: React.FC<WelcomeProps> = ({ navigation }) => {
+const GitHub = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../Imagenes/Fondo4.jpeg')}
-        style={styles.backgroundImage}
-      />
-      <Text style={styles.title}>InsectoManía</Text>
-      
-    
-      <TouchableOpacity 
-        style={styles.botonEmpezar} 
-        onPress={() => navigation.navigate('Log')}
-      >
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
-      </TouchableOpacity>
-
-     
-      <TouchableOpacity 
-        style={styles.botonEmpezar} 
-        onPress={() => navigation.navigate('Register')}
-      >
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
-
-      <View style={styles.creditsContainer}>
-        <Text style={styles.integrantes}>Sabine Vela</Text>
-        <Text style={styles.integrantes}>Dany Fernández</Text>
-        <Text style={styles.integrantes}>Joel Romero</Text>
-        <Text style={styles.course}>Desarrollo de Software</Text>
-        <Text style={styles.course}>Aplicaciones Móviles</Text>
-        
+    <ImageBackground
+      source={require('../Imagenes/fondogit.jpg')}
+      style={styles.container}
+    >
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Equipo de Desarrolladores</Text>
       </View>
-    </View>
+
+      <TouchableOpacity style={styles.nameContainer}>
+        <Text style={styles.name}>Sabine Vela</Text>
+        <Text style={styles.username}>@sabinevela</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.nameContainer}>
+        <Text style={styles.name}>Dany Fernández</Text>
+        <Text style={styles.username}>@DanyFjj</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.nameContainer}>
+        <Text style={styles.name}>Joel Romero</Text>
+        <Text style={styles.username}>@Joel-Romero</Text>
+      </TouchableOpacity>
+    </ImageBackground>
   );
 };
 
@@ -47,76 +34,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
+    padding: 20,
   },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.7,
-    zIndex: 0,
+  titleContainer: {
+    backgroundColor: '#9da962',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 40,
   },
+
   title: {
-    fontSize: 48,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#9ae084',
-    marginBottom: 50,
-    textAlign: 'center',
-    zIndex: 1,
-    letterSpacing: 5,
+    color: '#ffffff',
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 4 },
-    textShadowRadius: 15,
-  },
-  botonEmpezar: {
-    backgroundColor: 'linear-gradient(to right,rgb(23, 73, 16), #00bcd4)', 
-    borderRadius: 50,
-    paddingVertical: 20,
-    paddingHorizontal: 50,
-    marginBottom: 20,
-    zIndex: 1,
-    shadowColor: '#ff4081',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.9,
-    shadowRadius: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  },
-  
-  creditsContainer: {
-    padding: 20,
-    borderRadius: 15, 
-    alignItems: 'center',
-    marginTop: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    width: '80%',
-  },
-  integrantes: {
-    fontSize: 20,
-    color: '#000000', 
-    fontWeight: 'bold',
-    marginBottom: 5,
-    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
-  course: {
+  nameContainer: {
+    marginVertical: 15,
+    backgroundColor: '#648e5a',
+    borderRadius: 12,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    width: '80%',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  name: {
+    fontSize: 22,
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
+  username: {
     fontSize: 18,
-    color: '#000000',
-    fontWeight: '600',
+    color: '#c6e0f2',
     marginTop: 5,
-    textAlign: 'center',
-    
   },
 });
 
-export default Git;
+export default GitHub;
+
+
+

@@ -10,7 +10,6 @@ const insectos = [
   { nombre: 'Mosca', imagen: require('../Imagenes/Insecto2.jpeg') },
   { nombre: 'Abeja', imagen: require('../Imagenes/Insecto3.jpeg') },
   { nombre: 'Mariposa', imagen: require('../Imagenes/Insecto4.jpeg') },
-  
 ];
 
 const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
@@ -35,14 +34,20 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
         />
       </View>
 
-      
       <View style={styles.bottomContainer}>
         <Text style={styles.title}>Bienvenido</Text>
-        <TouchableOpacity 
-          style={styles.botonEmpezar} 
-          onPress={() => navigation.navigate('Welcome')} 
+        <TouchableOpacity
+          style={styles.botonEmpezar}
+          onPress={() => navigation.navigate('Welcome')}
         >
           <Text style={styles.buttonText}>Iniciar Juego</Text>
+        </TouchableOpacity>
+      
+        <TouchableOpacity
+          style={styles.botonEmpezar}
+          onPress={() => navigation.navigate('GitHub')}
+        >
+          <Text style={styles.buttonText}>GitHub Integrantes</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -128,8 +133,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textShadowColor: '#000',
     textTransform: 'uppercase',
-    textShadowRadius: 15
+    textShadowRadius: 15,
   },
 });
 
 export default PaginaPrincipal;
+
