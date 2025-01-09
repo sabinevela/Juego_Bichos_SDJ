@@ -16,7 +16,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/bichosfondos.jpg')}
+        source={require('../Imagenes/paginaprincipal.jpg')}
         style={styles.backgroundImage}
       />
 
