@@ -36,6 +36,7 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
         <Text style={styles.integrantes}>Joel Romero</Text>
         <Text style={styles.course}>Desarrollo de Software</Text>
         <Text style={styles.course}>Aplicaciones Móviles</Text>
+
       </View>
     </View>
   );

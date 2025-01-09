@@ -36,13 +36,14 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
 
       <View style={styles.bottomContainer}>
         <Text style={styles.title}>Bienvenido</Text>
+        
         <TouchableOpacity
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('Welcome')}
         >
           <Text style={styles.buttonText}>Iniciar Juego</Text>
         </TouchableOpacity>
-      
+
         <TouchableOpacity
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('GitHub')}
@@ -78,16 +79,20 @@ const styles = StyleSheet.create({
   insectosTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#9ae084',
+    color: '#4CAF50', 
     marginBottom: 10,
     textAlign: 'center',
+    textShadowColor: 'white', 
+    textShadowOffset: { width: 0, height: 4 }, 
+    textShadowRadius: 5,
   },
+  
   insectoItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#e8f5e9', 
     borderRadius: 10,
   },
   insectoImage: {
@@ -97,19 +102,19 @@ const styles = StyleSheet.create({
   },
   insectoName: {
     fontSize: 18,
-    color: '#000',
+    color: 'black', 
   },
   bottomContainer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 50,
     alignItems: 'center',
     zIndex: 1,
   },
   title: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#9ae084',
-    marginBottom: 200,
+    color: '#388e3c',
+    marginBottom: 20,
     textAlign: 'center',
     letterSpacing: 5,
     textShadowColor: '#000',
@@ -117,6 +122,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
+    backgroundColor:"#66bb6a",
     borderRadius: 50,
     paddingVertical: 20,
     paddingHorizontal: 50,
@@ -127,13 +133,11 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   buttonText: {
-    color: '#9ae084',
+    color: '#fff',
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    textShadowColor: '#000',
     textTransform: 'uppercase',
-    textShadowRadius: 15,
   },
 });
 
