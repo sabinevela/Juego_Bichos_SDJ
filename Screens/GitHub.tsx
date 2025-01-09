@@ -45,12 +45,13 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#ffffff',
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 5,
+    textAlign:'center'
   },
   nameContainer: {
     marginVertical: 15,
