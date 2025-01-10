@@ -19,7 +19,6 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
         source={require('../Imagenes/paginaprincipal.jpg')}
         style={styles.backgroundImage}
       />
-
       <View style={styles.insectosContainer}>
         <Text style={styles.insectosTitle}>Lista de Insectos:</Text>
         <FlatList
@@ -33,17 +32,14 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
-
       <View style={styles.bottomContainer}>
         <Text style={styles.title}>BIENVENIDO</Text>
-        
         <TouchableOpacity
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('Welcome')}
         >
           <Text style={styles.buttonText}>Iniciar Juego</Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('GitHub')}
