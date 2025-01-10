@@ -26,7 +26,6 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           renderItem={({ item }) => (
             <View style={styles.insectoItemContainer}>
               <Image source={item.imagen} style={styles.insectoImage} />
-              <Text style={styles.insectoName}>{item.nombre}</Text>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}

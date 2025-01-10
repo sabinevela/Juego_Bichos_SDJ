@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
-
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
 import { auth } from '../Config/Config';
 
 type LoginProps = {
@@ -19,9 +19,21 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
     }
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
-        navigation.navigate('Aplicacion', { username: user.email });
+
+        // obtener el userName desde la base de datos
+        const db = getDatabase();
+        const userRef = ref(db, `usuarios/${user.uid}`);
+        const snapshot = await get(userRef);
+
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          const userName = userData.userName;
+          navigation.navigate('Aplicacion', { username: userName });
+        } else {
+          Alert.alert('Error', 'No se encontró el usuario.');
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

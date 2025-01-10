@@ -1,27 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { ref, get } from 'firebase/database';
+import { db } from '../Config/Config'; // Asegúrate de importar correctamente la configuración de Firebase
 
 const Perfil = ({ navigation }: { navigation: any }) => {
-  // Datos estáticos del usuario
-  const userData = {
-    name: "Juan Pérez",
-    description: "Desarrollador de software apasionado por la tecnología y el diseño.",
-    profileImage: "https://example.com/your-profile-image.jpg", // Cambia la URL a la imagen del perfil
-  
-  };
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Obtener los datos del usuario desde Firebase (base de datos)
+        const userRef = ref(db, `users/${user.uid}`);
+        get(userRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            setUserData(snapshot.val());
+          } else {
+            console.log('No se encontró el usuario en la base de datos');
+          }
+        }).catch((error) => {
+          console.error('Error al obtener los datos del usuario:', error);
+        });
+      } else {
+        console.log('No hay usuario autenticado');
+      }
+    });
+
+    // Cleanup al desmontar el componente
+    return () => unsubscribe();
+  }, []);
+
+  if (!userData) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Cargando...</Text>
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo4.jpeg')} // Fondo del perfil
+      source={require('../Imagenes/Fondo4.jpeg')}
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        {/* Foto de perfil */}
         <Image source={{ uri: userData.profileImage }} style={styles.profileImage} />
-        
-        {/* Nombre del usuario */}
         <Text style={styles.userName}>{userData.name}</Text>
         <Text style={styles.userDescription}>{userData.description}</Text>
+        
+        {/* Información adicional */}
+        <Text style={styles.userInfoLabel}>Correo Electrónico:</Text>
+        <Text style={styles.userInfoValue}>{userData.email}</Text>
 
         {/* Botón de edición */}
         <TouchableOpacity
@@ -80,6 +110,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 20,
   },
+  userInfoLabel: {
+    fontSize: 18,
+    color: '#fff',
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  userInfoValue: {
+    fontSize: 16,
+    color: '#fff',
+    marginBottom: 15,
+  },
   editButton: {
     backgroundColor: '#6200ea',
     paddingVertical: 12,
@@ -102,6 +143,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  loadingText: {
+    color: '#fff',
+    fontSize: 20,
   },
 });
 
