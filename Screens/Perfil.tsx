@@ -1,100 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { ref, get } from 'firebase/database';
-import { db } from '../Config/Config'; // Configuración de Firebase
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 
-const Perfil = ({ route, navigation }: { route: any, navigation: any }) => {
-  const { username } = route.params; // Recibimos el nombre de usuario desde la navegación
-  const [userData, setUserData] = useState<any>(null); // Estado para almacenar los datos del usuario
-
-  useEffect(() => {
-    const userRef = ref(db, 'usuarios/' + username); // Ruta en Firebase
-    get(userRef)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          console.log("Datos del usuario:", data); // Ver los datos del usuario
-          setUserData(data); // Guardar los datos en el estado
-        } else {
-          Alert.alert('Error', 'No se encontraron datos para este usuario.');
-        }
-      })
-      .catch((error) => {
-        Alert.alert('Error', 'Hubo un problema al cargar los datos: ' + error.message);
-        console.log("Error en la consulta de Firebase:", error.message); // Ver el error en consola
-      });
-  }, [username]); // El efecto se ejecuta cada vez que cambia el nombre de usuario
-
-  if (!userData) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Cargando datos...</Text>
-      </View>
-    );
-  }
+const Perfil = ({ navigation }: { navigation: any }) => {
+  // Datos estáticos del usuario
+  const userData = {
+    name: "Juan Pérez",
+    description: "Desarrollador de software apasionado por la tecnología y el diseño.",
+    profileImage: "https://example.com/your-profile-image.jpg", // Cambia la URL a la imagen del perfil
+  
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Perfil de {userData.nombre}</Text>
-      <Text style={styles.text}>Nombre: {userData.nombre}</Text>
-      <Text style={styles.text}>Bio: {userData.bio || 'No tienes una biografía aún.'}</Text>
+    <ImageBackground
+      source={require('../Imagenes/Fondo4.jpeg')} // Fondo del perfil
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        {/* Foto de perfil */}
+        <Image source={{ uri: userData.profileImage }} style={styles.profileImage} />
+        
+        {/* Nombre del usuario */}
+        <Text style={styles.userName}>{userData.name}</Text>
+        <Text style={styles.userDescription}>{userData.description}</Text>
 
-      <TouchableOpacity
-        style={styles.editButton}
-        onPress={() => navigation.navigate('EditProfile', { username: userData.nombre })}
-      >
-        <Text style={styles.editButtonText}>Editar Perfil</Text>
-      </TouchableOpacity>
+        {/* Botón de edición */}
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => navigation.navigate('EditProfile')}
+        >
+          <Text style={styles.editButtonText}>Editar perfil</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={() => navigation.navigate('Login')}
-      >
-        <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Botón para regresar al inicio */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.navigate('PaginaPrincipal')}
+        >
+          <Text style={styles.backButtonText}>Regresar al Inicio</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'cover',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Fondo oscuro para mejorar legibilidad
+    borderRadius: 10,
     padding: 20,
-    backgroundColor: '#f0f0f0',
+    width: '90%',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 3,
+    borderColor: '#fff',
     marginBottom: 20,
   },
-  text: {
-    fontSize: 18,
+  userName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 10,
   },
+  userDescription: {
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 20,
+    marginHorizontal: 20,
+  },
   editButton: {
-    backgroundColor: '#4CAF50',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
+    backgroundColor: '#6200ea',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     borderRadius: 25,
-    marginTop: 20,
-    alignItems: 'center',
+    marginBottom: 15,
   },
   editButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
-  logoutButton: {
-    backgroundColor: '#FF6347',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
+  backButton: {
+    backgroundColor: '#ff6347',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     borderRadius: 25,
-    marginTop: 20,
-    alignItems: 'center',
   },
-  logoutButtonText: {
+  backButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',

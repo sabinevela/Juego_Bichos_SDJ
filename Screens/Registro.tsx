@@ -1,72 +1,71 @@
 import React, { useState } from 'react';
-import {View,Text,TextInput,StyleSheet,ImageBackground,TouchableOpacity,Alert,} from 'react-native';
-import { ref, set } from 'firebase/database';
-import { db } from '../Config/Config';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../Config/Config';
 
-const RegisterScreen = ({ navigation }: any) => {
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+type LoginProps = {
+  navigation: any;
+};
+
+const Inicio: React.FC<LoginProps> = ({ navigation }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleRegister = () => {
-    if (userName && email && password) {
-      const userRef = ref(db, 'usuarios/' + userName);
-
-      set(userRef, {
-        userName: userName,
-        email: email,
-        password: password,
-      })
-        .then(() => {
-          Alert.alert('¡Éxito!', 'Usuario registrado exitosamente');
-          navigation.navigate('Log');
-        })
-        .catch((error) => {
-          Alert.alert('Error', 'Error al registrar usuario: ' + error.message);
-        });
-    } else {
-      Alert.alert('Error', 'Por favor, ingresa todos los campos.');
+    if (email.trim() === '' || password.trim() === '') {
+      Alert.alert('Por favor, ingrese ambos campos.');
+      return;
     }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Aplicacion', { username: user.email });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert('Error', errorMessage);
+      });
   };
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo1.jpeg')} 
+      source={require('../assets/bichosfondos.jpg')}
       style={styles.background}
-      resizeMode="cover"
     >
-      <View style={styles.overlay}>
-        <Text style={styles.title}>Registro</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre de usuario"
-          placeholderTextColor="#ddd"
-          value={userName}
-          onChangeText={setUserName}
-        />
+      <View style={styles.container}>
+        <Text style={styles.title}>¡Registrate!</Text>
+        
         <TextInput
           style={styles.input}
           placeholder="Correo electrónico"
-          placeholderTextColor="#ddd"
+          placeholderTextColor="#fff"
           value={email}
           onChangeText={setEmail}
-          keyboardType="email-address"
         />
+        
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
-          placeholderTextColor="#ddd"
+          placeholderTextColor="#fff"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
         />
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Registrar</Text>
+        
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleRegister}
+        >
+          <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
-        <Text style={styles.loginLink} onPress={() => navigation.navigate('Log')}>
-          ¿Ya tienes una cuenta?{' '}
-          <Text style={styles.loginLinkText}>Inicia sesión</Text>
-        </Text>
+        
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Desarrollado por:</Text>
+          <Text style={styles.footerText}>Sabine Vela | Dany Fernández | Joel Romero</Text>
+          <Text style={styles.footerText}>Aplicaciones Móviles | Desarrollo de Software</Text>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -75,65 +74,65 @@ const RegisterScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  container: {
+    width: '80%',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+    borderRadius: 10,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#578c40',
     marginBottom: 30,
     textAlign: 'center',
-    textShadowColor: '#000',
+    textShadowColor: 'black',
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 5,
+    textShadowRadius: 10,
   },
   input: {
     width: '100%',
     padding: 15,
-    marginBottom: 20,
+    fontSize: 18,
+    borderColor: '#fff',
     borderWidth: 1,
-    borderColor: '#555',
-    borderRadius: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    fontSize: 16,
+    borderRadius: 10,
+    marginBottom: 20,
     color: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    width: '100%',
+    backgroundColor: '#388137',
     paddingVertical: 15,
-    backgroundColor: '#007BFF', 
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 20,
-    shadowColor: '#007BFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    elevation: 5,
+    paddingHorizontal: 50,
+    borderRadius: 50,
+    marginBottom: 30,
+    shadowColor: '#ff4081',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
   },
   buttonText: {
-    fontSize: 18,
+    color: 'white',
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
-  },
-  loginLink: {
-    fontSize: 16,
-    color: '#ccc',
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
-  loginLinkText: {
-    color: '#007BFF', 
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
+  footer: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
   },
 });
 
-export default RegisterScreen;
+export default Inicio;

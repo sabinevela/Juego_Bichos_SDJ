@@ -16,7 +16,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../Imagenes/FondoEcenario.jpeg')}
+        source={require('../Imagenes/paginaprincipal.jpg')}
         style={styles.backgroundImage}
       />
 
@@ -35,7 +35,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.bottomContainer}>
-        <Text style={styles.title}>Bienvenido</Text>
+        <Text style={styles.title}>BIENVENIDO</Text>
         
         <TouchableOpacity
           style={styles.botonEmpezar}
@@ -50,11 +50,18 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
         >
 
           
+
+          
           <Text style={styles.buttonText}>GitHub Integrantes</Text>
 
           
         </TouchableOpacity>
-        
+        <TouchableOpacity
+          style={styles.botonEmpezar}
+          onPress={() => navigation.navigate('Perfil')}
+        >
+          <Text style={styles.buttonText}>Perfil</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -84,10 +91,10 @@ const styles = StyleSheet.create({
   insectosTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#4CAF50', 
+    color: 'white', 
     marginBottom: 10,
     textAlign: 'center',
-    textShadowColor: 'white', 
+    textShadowColor: 'black', 
     textShadowOffset: { width: 0, height: 4 }, 
     textShadowRadius: 5,
   },
@@ -97,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#e8f5e9', 
+    backgroundColor: '#e8f5e9', // Verde claro para contraste
     borderRadius: 10,
   },
   insectoImage: {
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#388e3c',
+    color: '#66bb6a', // Verde más suave para el título
     marginBottom: 20,
     textAlign: 'center',
     letterSpacing: 5,
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor:"#66bb6a",
+    backgroundColor:"#66bb6a", // Verde claro para botones
     borderRadius: 50,
     paddingVertical: 20,
     paddingHorizontal: 50,
@@ -147,4 +154,5 @@ const styles = StyleSheet.create({
 });
 
 export default PaginaPrincipal;
+
 

@@ -106,7 +106,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/descarga.jpeg')}
+      source={require('../Imagenes/imagenaplicacion.jpg')}
       style={styles.container}
     >
       <Text style={styles.title}>¡Aplasta los insectos!</Text>

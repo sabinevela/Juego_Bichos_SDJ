@@ -1,5 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getDatabase } from 'firebase/database';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCX0FnufcWhC-LfjldIvUnkSmlO0dbcOc4",
@@ -12,8 +14,8 @@ const firebaseConfig = {
   measurementId: "G-6K2HV3YQG4"
 };
 
-
 const app = initializeApp(firebaseConfig);
 
-
+export const auth = getAuth(app);
 export const db = getDatabase(app);
+
