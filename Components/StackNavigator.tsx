@@ -24,6 +24,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Aplicacion" component={Aplicacion} />
         <Stack.Screen name="Playerrr" component={Puntaje} /> 
         <Stack.Screen name="GitHub" component={GitHub}/>
+        <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="Restaurar" component={Restablecer} />
         <Stack.Screen name="Perfil" component={Perfil} /> 
       </Stack.Navigator>
