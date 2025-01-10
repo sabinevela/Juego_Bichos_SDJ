@@ -1,71 +1,90 @@
 import React, { useState } from 'react';
-import {View,Text,TextInput,StyleSheet,ImageBackground,TouchableOpacity,Alert,} from 'react-native';
-import { ref, set } from 'firebase/database';
-import { db } from '../Config/Config';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ImageBackground,
+} from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-const RegisterScreen = ({ navigation }: any) => {
+import { getDatabase, ref, set } from 'firebase/database';
+import { auth } from '../Config/Config';
+
+type LoginProps = {
+  navigation: any;
+};
+
+const Inicio: React.FC<LoginProps> = ({ navigation }) => {
   const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contrasenia, setContrasenia] = useState('');
 
-  const handleRegister = () => {   if (userName && email && password) {
-      const userRef = ref(db, 'usuarios/' + userName);
-
-      set(userRef, {
-        userName: userName,
-        email: email,
-        password: password,
-      })
-        .then(() => {
-          Alert.alert('¡Éxito!', 'Usuario registrado exitosamente');
-          navigation.navigate('Log');
-        })
-        .catch((error) => {
-          Alert.alert('Error', 'Error al registrar usuario: ' + error.message);
-        });
-    } else {
-      Alert.alert('Error', 'Por favor, ingresa todos los campos.');
+  const registro = () => {
+    if (!userName || !correo || !contrasenia) {
+      Alert.alert('Error', 'Por favor, completa todos los campos.');
+      return;
     }
+
+    createUserWithEmailAndPassword(auth, correo, contrasenia)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        // guarda el userName en firebase realtime database
+        const db = getDatabase();
+        set(ref(db, `usuarios/${user.uid}`), {
+          userName,
+          email: correo,
+        })
+          .then(() => {
+            Alert.alert('¡Éxito!', 'Usuario registrado exitosamente.');
+            navigation.navigate('Welcome');
+          })
+          .catch((error) => {
+            Alert.alert('Error', `No se pudo guardar el usuario: ${error.message}`);
+          });
+      })
+      .catch((error) => {
+        Alert.alert('Error', `No se pudo registrar: ${error.message}`);
+      });
   };
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo1.jpeg')} 
+      source={require('../assets/bichosfondos.jpg')}
       style={styles.background}
-      resizeMode="cover"
     >
-      <View style={styles.overlay}>
-        <Text style={styles.title}>Registro</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>¡Regístrate!</Text>
+
         <TextInput
-          style={styles.input}
           placeholder="Nombre de usuario"
-          placeholderTextColor="#ddd"
+          style={styles.input}
+          onChangeText={(texto) => setUserName(texto)}
           value={userName}
-          onChangeText={setUserName}
+          placeholderTextColor="#fff"
         />
         <TextInput
-          style={styles.input}
           placeholder="Correo electrónico"
-          placeholderTextColor="#ddd"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
+          style={styles.input}
+          onChangeText={(texto) => setCorreo(texto)}
+          value={correo}
+          placeholderTextColor="#fff"
         />
         <TextInput
-          style={styles.input}
           placeholder="Contraseña"
-          placeholderTextColor="#ddd"
-          value={password}
-          onChangeText={setPassword}
+          style={styles.input}
           secureTextEntry
+          onChangeText={(texto) => setContrasenia(texto)}
+          value={contrasenia}
+          placeholderTextColor="#fff"
         />
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Registrar</Text>
+
+        <TouchableOpacity style={styles.button} onPress={registro}>
+          <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
-        <Text style={styles.loginLink} onPress={() => navigation.navigate('Log')}>
-          ¿Ya tienes una cuenta?{' '}
-          <Text style={styles.loginLinkText}>Inicia sesión</Text>
-        </Text>
       </View>
     </ImageBackground>
   );
@@ -74,65 +93,46 @@ const RegisterScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  overlay: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  container: {
+    width: '80%',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: 10,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#578c40',
     marginBottom: 30,
     textAlign: 'center',
-    textShadowColor: '#000',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 5,
   },
   input: {
     width: '100%',
     padding: 15,
-    marginBottom: 20,
+    fontSize: 18,
+    borderColor: '#fff',
     borderWidth: 1,
-    borderColor: '#555',
-    borderRadius: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    fontSize: 16,
+    borderRadius: 10,
+    marginBottom: 20,
     color: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    width: '100%',
+    backgroundColor: '#388137',
     paddingVertical: 15,
-    backgroundColor: '#007BFF', 
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 20,
-    shadowColor: '#007BFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    elevation: 5,
+    paddingHorizontal: 50,
+    borderRadius: 50,
   },
   buttonText: {
-    fontSize: 18,
+    color: 'white',
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
-  },
-  loginLink: {
-    fontSize: 16,
-    color: '#ccc',
     textAlign: 'center',
-  },
-  loginLinkText: {
-    color: '#007BFF', 
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
   },
 });
 
-export default RegisterScreen;
+export default Inicio;
