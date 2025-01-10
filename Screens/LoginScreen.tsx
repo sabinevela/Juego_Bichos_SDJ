@@ -1,117 +1,119 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Animated, StyleSheet, Dimensions, Alert } from "react-native";
 
-type LoginProps = {
-  navigation: any;
-};
+const { width, height } = Dimensions.get("window");
+const COLORS = ["red", "blue", "green", "yellow"];
 
-const Inicio: React.FC<LoginProps> = ({ navigation }) => {
-  const [username, setUsername] = useState<string>('');
+const App = () => {
+  const [ballColor, setBallColor] = useState(COLORS[0]);
+  const [circleColor, setCircleColor] = useState(COLORS[1]);
+  const [position] = useState(new Animated.Value(height - 150));
+  const [isJumping, setIsJumping] = useState(false);
 
-  const handleLogin = () => {
-    if (username.trim() === '') {
-      Alert.alert('Por favor, ingrese un nombre de usuario.');
-      return;
+  // Cambiar el color del círculo cada segundo
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCircleColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Manejar el salto de la pelota
+  const jump = () => {
+    if (isJumping) return;
+
+    setIsJumping(true);
+    Animated.sequence([
+      Animated.timing(position, {
+        toValue: height - 300,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(position, {
+        toValue: height - 150,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setIsJumping(false);
+      checkCollision();
+    });
+  };
+
+  // Verificar colisión
+  const checkCollision = () => {
+    if (ballColor !== circleColor) {
+      Alert.alert("¡Perdiste!", "El color no coincide", [
+        { text: "Reiniciar", onPress: resetGame },
+      ]);
     }
-    navigation.navigate('Aplicacion', { username });
+  };
+
+  // Reiniciar el juego
+  const resetGame = () => {
+    setBallColor(COLORS[0]);
+    setCircleColor(COLORS[1]);
+  };
+
+  // Cambiar el color de la pelota
+  const changeBallColor = () => {
+    const nextColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+    setBallColor(nextColor);
   };
 
   return (
-    <ImageBackground
-      source={require('../assets/bichosfondos.jpg')}
-      style={styles.background}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>¡Registrate!</Text>
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre de usuario"
-          placeholderTextColor="#fff"
-          value={username}
-          onChangeText={setUsername}
-        />
-        
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={handleLogin}
-        >
-          <Text style={styles.buttonText}>Jugar</Text>
-        </TouchableOpacity>
-        
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Desarrollado por:</Text>
-          <Text style={styles.footerText}>Sabine Vela | Dany Fernández | Joel Romero</Text>
-          <Text style={styles.footerText}>Aplicaciones Móviles | Desarrollo de Software</Text>
-        </View>
-      </View>
-    </ImageBackground>
+    <View style={styles.container}>
+      <View style={[styles.circle, { backgroundColor: circleColor }]} />
+      <Animated.View
+        style={[
+          styles.ball,
+          { backgroundColor: ballColor, transform: [{ translateY: position }] },
+        ]}
+      />
+      <TouchableOpacity style={styles.button} onPress={jump}>
+        <Text style={styles.buttonText}>Saltar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, { marginTop: 20 }]} onPress={changeBallColor}>
+        <Text style={styles.buttonText}>Cambiar color</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
-    width: '80%',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
-    borderRadius: 10,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#578c40',
-    marginBottom: 30,
-    textAlign: 'center',
-    textShadowColor: 'black',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 10,
+  circle: {
+    position: "absolute",
+    top: height / 4,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
   },
-  input: {
-    width: '100%',
-    padding: 15,
-    fontSize: 18,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 20,
-    color: '#fff',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  ball: {
+    position: "absolute",
+    bottom: 150,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   button: {
-    backgroundColor: '#388137',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 50,
-    marginBottom: 30,
-    shadowColor: '#ff4081',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.9,
-    shadowRadius: 10,
+    position: "absolute",
+    bottom: 50,
+    backgroundColor: "#333",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  },
-  footer: {
-    marginTop: 30,
-    alignItems: 'center',
-  },
-  footerText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
+    color: "#fff",
+    fontSize: 18,
   },
 });
 
-export default Inicio;
-
+export default App;
