@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground, Button } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 import { auth } from '../Config/Config';
@@ -73,6 +73,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         >
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
+        <Button title='Restablecer contraseña' onPress={()=> navigation.navigate('Restablecer')} />
         
         <View style={styles.footer}>
           <Text style={styles.footerText}>Desarrollado por:</Text>
