@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }: any) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           if (userData.password === password) {
-            Alert.alert('Login exitoso', '¡Bienvenido al Juego!');
+            Alert.alert('¡Bienvenido al Juego!','Empieza a matar insectos');
             navigation.navigate('Aplicacion', { username: name });
           } else {
             Alert.alert('Error', 'Contraseña incorrecta.');
@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/Fondo1.jpeg')} // Reemplaza con la ruta a tu imagen
+      source={require('../Imagenes/Fondo1.jpeg')} 
       style={styles.background}
       resizeMode="cover"
     >

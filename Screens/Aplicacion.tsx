@@ -97,7 +97,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       Alert.alert(
         "Juego terminado",
         `¡${username}, tu puntaje final es: ${score}!`,
-        [{ text: "OK", onPress: () => navigation.navigate("Welcome") }]
+        [{ text: "OK", onPress: () => navigation.navigate("Playerrr") }]
       );
     }).catch((error) => {
       Alert.alert('Error al guardar el score: ' + error.message);
@@ -142,6 +142,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
           <TouchableOpacity onPress={() => aplastarInsecto(insect.id)}>
             <Image source={insect.image} style={styles.insectImage} />
           </TouchableOpacity>
+          
         </Animated.View>
       ))}
     </ImageBackground>

@@ -36,6 +36,7 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
         <Text style={styles.integrantes}>Joel Romero</Text>
         <Text style={styles.course}>Desarrollo de Software</Text>
         <Text style={styles.course}>Aplicaciones Móviles</Text>
+
       </View>
     </View>
   );
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor: 'linear-gradient(to right,rgb(23, 73, 16), #00bcd4)', // Esto no funciona en React Native, lo cambiaré por un color sólido
+    backgroundColor: 'linear-gradient(to right,rgb(23, 73, 16), #00bcd4)', 
     borderRadius: 50,
     paddingVertical: 20,
     paddingHorizontal: 50,
@@ -102,16 +103,15 @@ const styles = StyleSheet.create({
   },
   integrantes: {
     fontSize: 20,
-    color: '#a8ffa4', 
+    color: '#000000', 
     fontWeight: 'bold',
     marginBottom: 5,
-    textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 5,
   },
   course: {
     fontSize: 18,
-    color: '#a8ffa4',
+    color: '#000000',
     fontWeight: '600',
     marginTop: 5,
     textAlign: 'center',
