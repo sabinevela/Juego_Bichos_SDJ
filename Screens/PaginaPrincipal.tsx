@@ -26,7 +26,6 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           renderItem={({ item }) => (
             <View style={styles.insectoItemContainer}>
               <Image source={item.imagen} style={styles.insectoImage} />
-              <Text style={styles.insectoName}>{item.nombre}</Text>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -44,7 +43,19 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('GitHub')}
         >
+
+          
+
+          
           <Text style={styles.buttonText}>GitHub Integrantes</Text>
+
+          
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botonEmpezar}
+          onPress={() => navigation.navigate('Perfil')}
+        >
+          <Text style={styles.buttonText}>Perfil</Text>
         </TouchableOpacity>
       </View>
     </View>

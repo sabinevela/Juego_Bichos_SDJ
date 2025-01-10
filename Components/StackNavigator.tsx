@@ -23,7 +23,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Aplicacion" component={Aplicacion} />
         <Stack.Screen name="Playerrr" component={Puntaje} /> 
         <Stack.Screen name="GitHub" component={GitHub}/>
-        <Stack.Screen name="Restablecer" component={Restablecer} />
+        <Stack.Screen name="Restaurar" component={Restablecer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

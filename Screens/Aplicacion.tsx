@@ -126,6 +126,10 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         <Text style={styles.endButtonText}>Ver Puntuacion</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Perfil')}>
+        <Text style={styles.endButtonText}>Ver Perfil</Text>
+      </TouchableOpacity>
+
       {insects.map(insect => (
         <Animated.View
           key={insect.id}

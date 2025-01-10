@@ -6,7 +6,7 @@ import { auth } from '../Config/Config';
 export default function Restablecer() {
   const [correo, setCorreo] = useState("");
 
-  const restablecer = () => {
+  const  = () => {
     if (correo.trim() === "") {
       Alert.alert("Error", "Por favor, ingrese un correo válido.");
       return;
