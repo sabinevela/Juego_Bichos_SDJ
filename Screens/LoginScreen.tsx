@@ -44,7 +44,7 @@ const App = () => {
   // Verificar colisión
   const checkCollision = () => {
     if (ballColor !== circleColor) {
-      Alert.alert("¡Perdiste!", "El color no coincide", [
+      Alert.alert("¡Perdiste!", "El color no ooocoincide", [
         { text: "Reiniciar", onPress: resetGame },
       ]);
     }
