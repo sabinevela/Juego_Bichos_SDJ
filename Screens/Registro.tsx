@@ -9,7 +9,6 @@ import {
   ImageBackground,
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth } from '../Config/Config';
 
@@ -32,7 +31,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        // guarda el userName en firebase realtime database
+        // guarda el userName en Firebase Realtime Database
         const db = getDatabase();
         set(ref(db, `usuarios/${user.uid}`), {
           userName,
