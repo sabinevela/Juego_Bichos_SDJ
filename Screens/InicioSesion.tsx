@@ -49,7 +49,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
     >
       <View style={styles.container}>
         <Text style={styles.title}>¡Inicia sesión!</Text>
-        
+
         <TextInput
           style={styles.input}
           placeholder="Correo electrónico"
@@ -57,7 +57,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
           value={email}
           onChangeText={setEmail}
         />
-        
+
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
@@ -66,14 +66,25 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
           onChangeText={setPassword}
           secureTextEntry
         />
-        
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={handleLogin}
-        >
+
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
-        
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: '#6b8e23' }]}
+          onPress={() => navigation.navigate('Restablecer')}
+        >
+          <Text style={styles.buttonText}>Restablecer contraseña</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: '#007bff' }]}
+          onPress={() => navigation.navigate('Registro')}
+        >
+          <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate</Text>
+        </TouchableOpacity>
+
         <View style={styles.footer}>
           <Text style={styles.footerText}>Desarrollado por:</Text>
           <Text style={styles.footerText}>Sabine Vela | Dany Fernández | Joel Romero</Text>
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: 10,
   },
   title: {
@@ -123,7 +134,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
-    marginBottom: 30,
+    marginBottom: 15,
     shadowColor: '#ff4081',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.9,
@@ -131,10 +142,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    textTransform: 'uppercase',
   },
   footer: {
     marginTop: 30,
