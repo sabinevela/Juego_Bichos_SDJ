@@ -48,8 +48,13 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           style={styles.botonEmpezar}
           onPress={() => navigation.navigate('GitHub')}
         >
+
+          
           <Text style={styles.buttonText}>GitHub Integrantes</Text>
+
+          
         </TouchableOpacity>
+        
       </View>
     </View>
   );
