@@ -10,6 +10,7 @@ import PaginaPrincipal from '../Screens/PaginaPrincipal';
 import GitHub from '../Screens/GitHub';
 import Restablecer from '../Screens/Recuperacion';
 import Perfil from '../Screens/Perfil';
+import CamaraScreen from '../Screens/CamaraScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export default function AppNavegador() {
         <Stack.Screen name="GitHub" component={GitHub}/>
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="Restaurar" component={Restablecer} />
+        <Stack.Screen name="Camara" component={CamaraScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

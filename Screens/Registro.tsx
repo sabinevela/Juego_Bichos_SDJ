@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ImageBackground,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth } from '../Config/Config';
@@ -30,8 +22,6 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, correo, contrasenia)
       .then((userCredential) => {
         const user = userCredential.user;
-
-        // guarda el userName en Firebase Realtime Database
         const db = getDatabase();
         set(ref(db, `usuarios/${user.uid}`), {
           userName,
@@ -84,6 +74,9 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={registro}>
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonCamera} onPress={() => navigation.navigate('Camara')}>
+          <Text style={styles.buttonText}>Abrir Cámara</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -125,6 +118,13 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
+    marginBottom: 10,
+  },
+  buttonCamera: {
+    backgroundColor: '#d9534f',
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 50,
   },
   buttonText: {
     color: 'white',
@@ -135,3 +135,4 @@ const styles = StyleSheet.create({
 });
 
 export default Inicio;
+
