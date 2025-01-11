@@ -10,7 +10,6 @@ const App = () => {
   const [position] = useState(new Animated.Value(height - 150));
   const [isJumping, setIsJumping] = useState(false);
 
-  // Cambiar el color del círculo cada segundo
   useEffect(() => {
     const interval = setInterval(() => {
       setCircleColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
@@ -19,7 +18,6 @@ const App = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Manejar el salto de la pelota
   const jump = () => {
     if (isJumping) return;
 
@@ -41,22 +39,19 @@ const App = () => {
     });
   };
 
-  // Verificar colisión
   const checkCollision = () => {
     if (ballColor !== circleColor) {
-      Alert.alert("¡Perdiste!", "El color no ooocoincide", [
+      Alert.alert("¡Perdiste!", "El color no coincide", [
         { text: "Reiniciar", onPress: resetGame },
       ]);
     }
   };
 
-  // Reiniciar el juego
   const resetGame = () => {
     setBallColor(COLORS[0]);
     setCircleColor(COLORS[1]);
   };
 
-  // Cambiar el color de la pelota
   const changeBallColor = () => {
     const nextColor = COLORS[Math.floor(Math.random() * COLORS.length)];
     setBallColor(nextColor);
@@ -74,8 +69,11 @@ const App = () => {
       <TouchableOpacity style={styles.button} onPress={jump}>
         <Text style={styles.buttonText}>Saltar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, { marginTop: 20 }]} onPress={changeBallColor}>
+      <TouchableOpacity style={styles.buttonSecond} onPress={changeBallColor}>
         <Text style={styles.buttonText}>Cambiar color</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonThird} onPress={resetGame}>
+        <Text style={styles.buttonText}>Reiniciar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -105,7 +103,7 @@ const styles = StyleSheet.create({
   button: {
     position: "absolute",
     bottom: 50,
-    backgroundColor: "#333",
+    backgroundColor: "#A8E6A3",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -113,6 +111,22 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 18,
+  },
+  buttonSecond: {
+    position: "absolute",
+    bottom: 100,
+    backgroundColor: "#C1E6A1", 
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonThird: {
+    position: "absolute",
+    bottom: 150,
+    backgroundColor: "#B9E5A3", 
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
 });
 

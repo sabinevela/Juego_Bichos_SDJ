@@ -17,7 +17,7 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.button} 
-          onPress={() => navigation.navigate('Log')}
+          onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
@@ -65,16 +65,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 60, // Aumentamos el tamaño para darle más protagonismo
+    fontSize: 60, 
     fontWeight: 'bold',
     color: '#388e3c',
     marginBottom: 40,
     textAlign: 'center',
     letterSpacing: 6,
-    textShadowColor: '#004d40', // Sombra más prominente
+    textShadowColor: '#004d40',
     textShadowOffset: { width: 0, height: 6 },
-    textShadowRadius: 15, // Aumentamos el radio de la sombra
-    fontFamily: 'Poppins', // Cambiar la fuente si tienes acceso a ella
+    textShadowRadius: 15, 
+    fontFamily: 'Poppins', 
   },
   button: {
     backgroundColor: '#66bb6a',
