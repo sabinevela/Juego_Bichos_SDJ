@@ -1,143 +1,128 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 
 type PaginaPrincipalProps = {
   navigation: any;
 };
 
-const insectos = [
-  { nombre: 'Luciernaga', imagen: require('../Imagenes/Insecto1.jpeg') },
-  { nombre: 'Mosca', imagen: require('../Imagenes/Insecto2.jpeg') },
-  { nombre: 'Abeja', imagen: require('../Imagenes/Insecto3.jpeg') },
-  { nombre: 'Mariposa', imagen: require('../Imagenes/Insecto4.jpeg') },
-];
-
 const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../Imagenes/paginaprincipal.jpg')}
-        style={styles.backgroundImage}
-      />
-      <View style={styles.insectosContainer}>
-        <Text style={styles.insectosTitle}>Lista de Insectos:</Text>
-        <FlatList
-          data={insectos}
-          renderItem={({ item }) => (
-            <View style={styles.insectoItemContainer}>
-              <Image source={item.imagen} style={styles.insectoImage} />
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-      <View style={styles.bottomContainer}>
-        <Text style={styles.title}>BIENVENIDO</Text>
-        <TouchableOpacity
-          style={styles.botonEmpezar}
-          onPress={() => navigation.navigate('Welcome')}
-        >
-          <Text style={styles.buttonText}>Iniciar Juego</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.botonEmpezar}
-          onPress={() => navigation.navigate('GitHub')}
-        >
-
-          
-
-          
-          <Text style={styles.buttonText}>GitHub Integrantes</Text>
-
-          
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.botonEmpezar}
-          onPress={() => navigation.navigate('Perfil')}
-        >
-          <Text style={styles.buttonText}>Perfil</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.backgroundImageContainer}>
+          <Image
+            source={require('../Imagenes/paginaprincipal.jpg')}
+            style={styles.backgroundImage}
+            resizeMode="cover"
+          />
+        </View>
+        <View style={styles.bottomContainer}>
+          <Image
+            source={require('../Imagenes/bicho_pagina_principal-removebg-preview.png')}
+            style={styles.bichoImage}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>BIENVENIDO</Text>
+          <TouchableOpacity
+            style={styles.botonEmpezar}
+            onPress={() => navigation.navigate('Welcome')}
+          >
+            <Text style={styles.buttonText}>Iniciar Juego</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botonEmpezar}
+            onPress={() => navigation.navigate('Perfil')}
+          >
+            <Text style={styles.buttonText}>Perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botonEmpezar}
+            onPress={() => navigation.navigate('Insectos')}
+          >
+            <Text style={styles.buttonText}>Insectos</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botonEmpezar}
+            onPress={() => navigation.navigate('GitHub')}
+          >
+            <Text style={styles.buttonText}>GitHub</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: '#eaf1e2',
+  },
+  container: {
+    flexGrow: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    position: 'relative',
+    paddingBottom: 20,
   },
-  backgroundImage: {
+  backgroundImageContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+  },
+  backgroundImage: {
     width: '100%',
     height: '100%',
-    opacity: 0.7,
-    zIndex: 0,
-  },
-  insectosContainer: {
-    marginTop: 20,
-    paddingHorizontal: 20,
-    width: '100%',
-  },
-  insectosTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white', 
-    marginBottom: 10,
-    textAlign: 'center',
-    textShadowColor: 'black', 
-    textShadowOffset: { width: 0, height: 4 }, 
-    textShadowRadius: 5,
-  },
-  
-  insectoItemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#e8f5e9', // Verde claro para contraste
-    borderRadius: 10,
-  },
-  insectoImage: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-  },
-  insectoName: {
-    fontSize: 18,
-    color: 'black', 
+    opacity: 0.4,
   },
   bottomContainer: {
-    position: 'absolute',
-    bottom: 50,
+    position: 'relative',
     alignItems: 'center',
     zIndex: 1,
+    paddingTop: 50,
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 40,
+  },
+  bichoImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 30,
+    borderRadius: 30,
+    borderWidth: 6,
+    borderColor: '#4caf50',
+    shadowColor: '#4caf50',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.7,
+    shadowRadius: 15,
   },
   title: {
-    fontSize: 48,
+    fontSize: 38,
     fontWeight: 'bold',
-    color: '#66bb6a', // Verde más suave para el título
-    marginBottom: 20,
+    color: '#4caf50',
+    marginBottom: 30,
     textAlign: 'center',
-    letterSpacing: 5,
+    letterSpacing: 3,
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor:"#66bb6a", // Verde claro para botones
+    backgroundColor: "#4caf50",
     borderRadius: 50,
-    paddingVertical: 20,
+    paddingVertical: 18,
     paddingHorizontal: 50,
     marginBottom: 20,
-    shadowColor: '#ff4081',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.9,
-    shadowRadius: 10,
+    shadowColor: '#4caf50',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.8,
+    shadowRadius: 12,
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transform: [{ scale: 1.05 }],
   },
   buttonText: {
     color: '#fff',
@@ -149,5 +134,4 @@ const styles = StyleSheet.create({
 });
 
 export default PaginaPrincipal;
-
 
