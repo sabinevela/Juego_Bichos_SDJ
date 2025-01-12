@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, Animated } from 'react-native';
 import { Video } from 'expo-av'; // Si usas Expo
 // import Video from 'react-native-video'; // Si no usas Expo
 
@@ -8,6 +8,27 @@ type PaginaPrincipalProps = {
 };
 
 const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
+  // Animación para el título
+  const [fadeAnim] = useState(new Animated.Value(0));  // Valor inicial para animación de opacidad
+  const [scaleAnim] = useState(new Animated.Value(0)); // Valor inicial para animación de escala de los botones
+
+  useEffect(() => {
+    // Animación de opacidad para el título "BIENVENIDO"
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+
+    // Animación de escala para los botones
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 4,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim, scaleAnim]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -24,25 +45,35 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           />
         </View>
         <View style={styles.bottomContainer}>
-          <Text style={styles.title}>BIENVENIDO</Text>
-          <TouchableOpacity
-            style={styles.botonEmpezar}
-            onPress={() => navigation.navigate('Welcome')}
-          >
-            <Text style={styles.buttonText}>Iniciar Juego</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botonEmpezar}
-            onPress={() => navigation.navigate('Insectos')}
-          >
-            <Text style={styles.buttonText}>Insectos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botonEmpezar}
-            onPress={() => navigation.navigate('GitHub')}
-          >
-            <Text style={styles.buttonText}>GitHub</Text>
-          </TouchableOpacity>
+          {/* Animación de opacidad para el título */}
+          <Animated.Text style={[styles.title, { opacity: fadeAnim }]}>
+            BIENVENIDO
+          </Animated.Text>
+
+          {/* Botones con animación de escala */}
+          <Animated.View style={[styles.botonEmpezar, { transform: [{ scale: scaleAnim }] }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Welcome')}
+            >
+              <Text style={styles.buttonText}>Iniciar Juego</Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View style={[styles.botonEmpezar, { transform: [{ scale: scaleAnim }] }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Insectos')}
+            >
+              <Text style={styles.buttonText}>Insectos</Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View style={[styles.botonEmpezar, { transform: [{ scale: scaleAnim }] }]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('GitHub')}
+            >
+              <Text style={styles.buttonText}>GitHub</Text>
+            </TouchableOpacity>
+          </Animated.View>
         </View>
       </ScrollView>
     </SafeAreaView>
