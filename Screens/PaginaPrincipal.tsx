@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { Video } from 'expo-av'; // Si usas Expo
+// import Video from 'react-native-video'; // Si no usas Expo
 
 type PaginaPrincipalProps = {
   navigation: any;
@@ -9,19 +11,19 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.backgroundImageContainer}>
-          <Image
-            source={require('../Imagenes/paginaprincipal.jpg')}
-            style={styles.backgroundImage}
+        <View style={styles.backgroundVideoContainer}>
+          <Video
+            source={require('../Screens/video/689955545a3fc679e8a8721c2fbbdb62.mp4')} // Ruta de tu video
+            rate={1.0}
+            volume={1.0}
+            isMuted={false}
             resizeMode="cover"
+            shouldPlay
+            isLooping
+            style={styles.backgroundVideo}
           />
         </View>
         <View style={styles.bottomContainer}>
-          <Image
-            source={require('../Imagenes/bicho_pagina_principal-removebg-preview.png')}
-            style={styles.bichoImage}
-            resizeMode="contain"
-          />
           <Text style={styles.title}>BIENVENIDO</Text>
           <TouchableOpacity
             style={styles.botonEmpezar}
@@ -29,7 +31,6 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           >
             <Text style={styles.buttonText}>Iniciar Juego</Text>
           </TouchableOpacity>
-         
           <TouchableOpacity
             style={styles.botonEmpezar}
             onPress={() => navigation.navigate('Insectos')}
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
   },
-  backgroundImageContainer: {
+  backgroundVideoContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -67,10 +68,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: -1,
   },
-  backgroundImage: {
+  backgroundVideo: {
     width: '100%',
     height: '100%',
-    opacity: 0.4,
   },
   bottomContainer: {
     position: 'relative',
@@ -80,18 +80,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     marginBottom: 40,
-  },
-  bichoImage: {
-    width: 200,
-    height: 200,
-    marginBottom: 30,
-    borderRadius: 30,
-    borderWidth: 6,
-    borderColor: '#4caf50',
-    shadowColor: '#4caf50',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.7,
-    shadowRadius: 15,
   },
   title: {
     fontSize: 38,
@@ -105,12 +93,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor: "#4caf50",
+    backgroundColor: 'rgba(237, 220, 183, 0.7)', // Fondo de botón color #eddcb7 con transparencia
     borderRadius: 50,
     paddingVertical: 18,
     paddingHorizontal: 50,
     marginBottom: 20,
-    shadowColor: '#4caf50',
+    shadowColor: '#000', // Sombra en negro
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 12,
@@ -120,7 +108,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.05 }],
   },
   buttonText: {
-    color: '#fff',
+    color: '#000', // Texto en color negro
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -129,4 +117,3 @@ const styles = StyleSheet.create({
 });
 
 export default PaginaPrincipal;
-

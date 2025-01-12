@@ -128,7 +128,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     set(scoreRef, { nombre: username, score })
       .then(() => {
         Alert.alert("Juego terminado", `¡${username}, tu puntaje final es: ${score}!`, [
-          { text: "OK", onPress: () => navigation.navigate("Playerrr") },
+          { text: "OK", onPress: () => navigation.navigate("Puntaje") },
         ]);
       })
       .catch(error => Alert.alert('Error al guardar el score: ' + error.message));
