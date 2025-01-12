@@ -29,12 +29,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           >
             <Text style={styles.buttonText}>Iniciar Juego</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botonEmpezar}
-            onPress={() => navigation.navigate('Perfil')}
-          >
-            <Text style={styles.buttonText}>Perfil</Text>
-          </TouchableOpacity>
+         
           <TouchableOpacity
             style={styles.botonEmpezar}
             onPress={() => navigation.navigate('Insectos')}

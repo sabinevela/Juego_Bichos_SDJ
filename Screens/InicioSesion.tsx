@@ -73,7 +73,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#6b8e23' }]}
-          onPress={() => navigation.navigate('restablecer')}
+          onPress={() => navigation.navigate('Restaurar')}
         >
           <Text style={styles.buttonText}>Restablecer contraseña</Text>
         </TouchableOpacity>
