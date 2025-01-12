@@ -8,9 +8,9 @@ const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
   require('../Imagenes/Insecto2.jpeg'),
   require('../Imagenes/Insecto3.jpeg'),
-  require('../Imagenes/Insecto4.jpeg'),
+ 
 ];
-const butterflyImage = require('../Imagenes/Mariposa.jpeg'); // Imagen de la mariposa
+const butterflyImage = require('../Imagenes/Insecto4.jpeg'); // Imagen de la mariposa
 
 type AplicacionProps = {
   route: any;
@@ -39,7 +39,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     }
   }, [timeLeft]);
 
-  // Avanzar de nivel basado en el puntaje
+  // Avanzar automáticamente de nivel basado en el puntaje
   useEffect(() => {
     if (score >= 20 && nivel === 1) {
       avanzarNivel(2);
@@ -48,11 +48,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   const avanzarNivel = (nuevoNivel: number) => {
     setNivel(nuevoNivel);
-    setInsects([]); // Limpiar los insectos actuales
+    setInsects([]); // Limpiar insectos actuales
     Alert.alert(
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
-        ? 'Los insectos se moverán más rápido y habrá más por ronda.'
+        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
         : ''
     );
   };
@@ -169,7 +169,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         <TouchableOpacity style={styles.endButton} onPress={handleEndGame}>
           <Text style={styles.endButtonText}>Terminar Intento</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Playerrr')}>
+        <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Puntaje')}>
           <Text style={styles.endButtonText}>Ver Puntuación</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Perfil')}>
