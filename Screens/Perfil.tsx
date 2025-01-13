@@ -10,7 +10,6 @@ export default function Perfil() {
 
   useEffect(() => {
     if (user) {
-      // Obtener datos del usuario desde Firebase Realtime Database
       const db = getDatabase();
       const userRef = ref(db, `usuarios/${user.uid}`);
 
@@ -18,7 +17,7 @@ export default function Perfil() {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            setUserData(data); // Setear datos en el estado
+            setUserData(data); 
           } else {
             console.log('No data available');
           }
@@ -39,7 +38,7 @@ export default function Perfil() {
 
   return (
     <ImageBackground
-      source={require('../assets/bichosfondos.jpg')} // Fondo del perfil
+      source={require('../assets/bichosfondos.jpg')}
       style={styles.background}
     >
       <View style={styles.container}>
