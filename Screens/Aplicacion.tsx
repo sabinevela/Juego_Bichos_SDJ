@@ -128,7 +128,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         <TouchableOpacity style={styles.endButton} onPress={handleEndGame}>
           <Text style={styles.endButtonText}>Terminar Intento</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Playerrr')}>
+        <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Score')}>
           <Text style={styles.endButtonText}>Ver Puntuación</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Perfil')}>

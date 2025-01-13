@@ -12,6 +12,7 @@ import Restablecer from '../Screens/Recuperacion';
 import Perfil from '../Screens/Perfil';
 import CamaraScreen from '../Screens/CamaraScreen';
 import InsectosScreen from '../Screens/InsectosScreen';
+import Playerrr from '../Screens/Playerrr';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Restaurar" component={Restablecer} />
         <Stack.Screen name="Camara" component={CamaraScreen}/>
         <Stack.Screen name="Insectos" component={InsectosScreen}/>
-
+        <Stack.Screen name="Score" component={Playerrr}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
