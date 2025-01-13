@@ -22,7 +22,6 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
       .then(async (userCredential) => {
         const user = userCredential.user;
 
-        // obtener el userName desde la base de datos
         const db = getDatabase();
         const userRef = ref(db, `usuarios/${user.uid}`);
         const snapshot = await get(userRef);
