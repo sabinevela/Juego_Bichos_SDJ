@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackgr
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 import { auth } from '../Config/Config';
+import { Video } from 'expo-av'; 
 
 type LoginProps = {
   navigation: any;
@@ -42,10 +43,18 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground
-      source={require('../assets/bichosfondos.jpg')}
-      style={styles.background}
-    >
+    <View style={styles.background}>
+      <Video
+        source={require('../Screens/video/2.mp4')}
+        rate={1.0}
+        volume={1.0}
+        isMuted={true}
+        resizeMode="cover"
+        shouldPlay
+        isLooping
+        style={styles.backgroundVideo}
+      />
+
       <View style={styles.container}>
         <Text style={styles.title}>¡Inicia sesión!</Text>
 
@@ -72,7 +81,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
 
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#6b8e23' }]}
-          onPress={() => navigation.navigate('restablecer')}
+          onPress={() => navigation.navigate('Restaurar')}
         >
           <Text style={styles.buttonText}>Restablecer contraseña</Text>
         </TouchableOpacity>
@@ -90,7 +99,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
           <Text style={styles.footerText}>Aplicaciones Móviles | Desarrollo de Software</Text>
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -100,17 +109,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  backgroundVideo: {
+    ...StyleSheet.absoluteFillObject,
+  },
   container: {
     width: '80%',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
     borderRadius: 10,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#578c40',
+    color: '#eddcb7',
     marginBottom: 30,
     textAlign: 'center',
     textShadowColor: 'black',
@@ -129,18 +141,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    backgroundColor: '#388137',
+    backgroundColor: '#eddcb7', 
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
     marginBottom: 15,
-    shadowColor: '#ff4081',
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.9,
     shadowRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',

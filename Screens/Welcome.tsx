@@ -1,11 +1,42 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, Easing } from 'react-native';
 
 type WelcomeProps = {
   navigation: any;
 };
 
 const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animatedValue, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedValue, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [animatedValue]);
+
+  const scale = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.2],
+  });
+
+  const color = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#388e3c', '#81c784'],
+  });
+
   return (
     <View style={styles.container}>
       <Image
@@ -13,7 +44,17 @@ const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
         style={styles.backgroundImage}
       />
       <View style={styles.overlay}>
-        <Text style={styles.title}>InsectoX</Text>
+        <Animated.Text
+          style={[
+            styles.title,
+            {
+              transform: [{ scale }],
+              color,
+            },
+          ]}
+        >
+          InsectoX
+        </Animated.Text>
 
         <TouchableOpacity 
           style={styles.button} 
@@ -65,16 +106,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 60, 
+    fontSize: 60,
     fontWeight: 'bold',
-    color: '#388e3c',
     marginBottom: 40,
     textAlign: 'center',
     letterSpacing: 6,
     textShadowColor: '#004d40',
     textShadowOffset: { width: 0, height: 6 },
-    textShadowRadius: 15, 
-    fontFamily: 'Poppins', 
+    textShadowRadius: 15,
+    fontFamily: 'Poppins',
   },
   button: {
     backgroundColor: '#66bb6a',
@@ -113,7 +153,7 @@ const styles = StyleSheet.create({
   },
   integrantes: {
     fontSize: 18,
-    color: '#fff', 
+    color: '#fff',
     fontWeight: 'bold',
     marginBottom: 5,
     textShadowOffset: { width: 1, height: 1 },
