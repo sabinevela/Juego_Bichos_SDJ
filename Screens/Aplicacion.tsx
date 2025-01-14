@@ -41,16 +41,24 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   useEffect(() => {
     if (score >= 20 && nivel === 1) {
       avanzarNivel(2);
+    } else if (score >= 40 && nivel === 2) {
+      avanzarNivel(3);
+    } else if (score >= 60 && nivel === 3) {
+      avanzarNivel(4);
     }
   }, [score]);
 
   const avanzarNivel = (nuevoNivel: number) => {
     setNivel(nuevoNivel);
-    setInsects([]);
+    setInsects([]); // Limpiar los insectos al avanzar de nivel
     Alert.alert(
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
         ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
+        : nuevoNivel === 3
+        ? 'Los insectos se moverán aún más rápido, ¡prepárate!'
+        : nuevoNivel === 4
+        ? '¡Nivel máximo! Los insectos se mueven a toda velocidad, no puedes detenerte ahora.'
         : ''
     );
   };
@@ -58,8 +66,8 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const generateInsects = () => {
     if (gameOver) return;
 
-    const numInsects = nivel === 1 ? 3 : 5;
-    const velocidadMovimiento = nivel === 1 ? 2000 : 1000;
+    const numInsects = nivel === 1 ? 3 : nivel === 2 ? 5 : nivel === 3 ? 7 : 10;
+    const velocidadMovimiento = nivel === 1 ? 2000 : nivel === 2 ? 1500 : nivel === 3 ? 1000 : 500;
     const newInsects = [];
 
     for (let i = 0; i < numInsects; i++) {
@@ -73,6 +81,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       });
     }
 
+    // Siempre agregar una mariposa
     newInsects.push({
       id: Math.random(),
       left: new Animated.Value(Math.random() * 300),
