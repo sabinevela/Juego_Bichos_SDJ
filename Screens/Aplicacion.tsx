@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   score: {
-    fontSize: 23,
+    fontSize: 24,
     color: '#fff',
   },
   time: {
