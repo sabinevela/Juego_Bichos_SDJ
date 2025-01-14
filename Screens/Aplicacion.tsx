@@ -72,8 +72,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     const numInsects = nivel === 1 ? 3 : nivel === 2 ? 5 : nivel === 3 ? 7 : 10;
     const velocidadMovimiento = nivel === 1 ? 2000 : nivel === 2 ? 1500 : nivel === 3 ? 1000 : 500;
     const newInsects = [];
-
-    // Crear insectos normales
+    
     for (let i = 0; i < numInsects; i++) {
       newInsects.push({
         id: Math.random(),
