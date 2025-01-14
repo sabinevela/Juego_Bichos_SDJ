@@ -4,7 +4,6 @@ import { Animated, TouchableOpacity } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
 
-// Imágenes de los insectos
 const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
   require('../Imagenes/Insecto2.jpeg'),
@@ -12,7 +11,7 @@ const insectImages = [
 ];
 const butterflyImage = require('../Imagenes/Insecto4.jpeg');
 
-// Imagen del insecto especial para Nivel 4 (por ejemplo, un insecto gigante o diferente)
+
 const specialInsectImage = require('../Imagenes/InsectoEspecial.png');
 
 type AplicacionProps = {
@@ -43,26 +42,26 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   }, [timeLeft]);
 
   useEffect(() => {
-    if (score >= 20 && nivel === 1) {
+    if (score >= 5 && nivel === 1) {
       avanzarNivel(2);
-    } else if (score >= 40 && nivel === 2) {
+    } else if (score >= 10 && nivel === 2) {
       avanzarNivel(3);
-    } else if (score >= 60 && nivel === 3) {
+    } else if (score >= 15 && nivel === 3) {
       avanzarNivel(4);
     }
   }, [score]);
 
   const avanzarNivel = (nuevoNivel: number) => {
     setNivel(nuevoNivel);
-    setInsects([]); // Limpiar los insectos al avanzar de nivel
+    setInsects([]); 
     Alert.alert(
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
         ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
         : nuevoNivel === 3
-        ? 'Los insectos se moverán aún más rápido, ¡prepárate!'
+        ? 'Los insectos se moverán aún más rápido, ¡Buena suerte!'
         : nuevoNivel === 4
-        ? '¡Nivel máximo! Un insecto especial terminará el juego si lo tocas.'
+        ? 'Los insectos se moverán mucho más rápido y Un insecto especial terminará el juego si lo tocas.'
         : ''
     );
   };
@@ -86,7 +85,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       });
     }
 
-    // Siempre agregar una mariposa
     newInsects.push({
       id: Math.random(),
       left: new Animated.Value(Math.random() * 300),
@@ -96,14 +94,13 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       velocidad: velocidadMovimiento,
     });
 
-    // Si estamos en el Nivel 4, agregar un insecto especial que termina el juego
     if (nivel === 4) {
       newInsects.push({
         id: Math.random(),
         left: new Animated.Value(Math.random() * 300),
         top: new Animated.Value(Math.random() * 600),
-        image: specialInsectImage,  // Imagen del insecto especial
-        isSpecial: true,  // Bandera para identificarlo
+        image: specialInsectImage,  
+        isSpecial: true,  
         velocidad: velocidadMovimiento,
       });
     }
@@ -136,7 +133,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const aplastarInsecto = (id: number, isButterfly: boolean, isSpecial: boolean) => {
     if (!gameOver) {
       if (isSpecial) {
-        // Si es el insecto especial, termina el juego
         handleEndGame();
         return;
       }
