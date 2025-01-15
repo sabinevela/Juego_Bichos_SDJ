@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Button, Image, View, StyleSheet, Text, Alert } from 'react-native';
+import { Button, Image, View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
+import { token } from '../Config/Secrets';
+import { Buffer } from 'buffer';
 
 export default function CamaraScreen() {
   const [image, setImage] = useState<string | null>(null);
@@ -79,7 +81,6 @@ export default function CamaraScreen() {
 
       Alert.alert('Éxito', 'Imagen subida correctamente a Dropbox');
     } catch (error) {
-      console.error('Error al subir la imagen:', error.response?.data || error.message);
       Alert.alert('Error', 'Hubo un problema al subir la imagen');
     }
   };
@@ -102,9 +103,22 @@ export default function CamaraScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>¿Deseas conceder los permisos para activar la cámara?</Text>
-      <Button title="Aceptar" onPress={pickImage} color="#FF6347" />
+
+      <TouchableOpacity style={styles.button} onPress={pickImage}>
+        <Text style={styles.buttonText}>📸 Tomar Foto</Text>
+      </TouchableOpacity>
+
       {image && <Image source={{ uri: image }} style={styles.image} />}
-      <Button title="Subir Imagen" onPress={subirImagen} />
+
+      {image && (
+        <TouchableOpacity style={styles.button} onPress={subirImagen}>
+          <Text style={styles.buttonText}>📤 Subir Imagen</Text>
+        </TouchableOpacity>
+      )}
+
+      {ImageUrl !== "" && (
+        <Text style={styles.urlText}>📌 {ImageUrl}</Text>
+      )}
     </View>
   );
 }
@@ -118,11 +132,29 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    fontSize: 24,
+    fontSize: 22,
     color: 'white',
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: "center",
+  },
+  button: {
+    backgroundColor: '#FF6347',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 10,
+    width: '80%',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   image: {
     width: 300,
@@ -136,4 +168,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 4,
   },
+  urlText: {
+    marginTop: 15,
+    color: '#FF6347',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
+
