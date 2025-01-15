@@ -24,9 +24,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [nivel, setNivel] = useState(1);
+  const [insectIntervalId, setInsectIntervalId] = useState<NodeJS.Timer | null>(null);
 
   useEffect(() => {
     const insectInterval = setInterval(() => generateInsects(), 3000);
+    setInsectIntervalId(insectInterval);
     return () => clearInterval(insectInterval);
   }, [nivel]);
 
@@ -67,7 +69,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const generateInsects = () => {
     if (gameOver) return;
 
-    const maxInsects = 20; // límite máximo de insectos en pantalla
+    const maxInsects = 20;
     if (insects.length >= maxInsects) return;
 
     const numInsects = nivel === 1 ? 3 : nivel === 2 ? 5 : nivel === 3 ? 7 : 10;
@@ -148,6 +150,15 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   const handleEndGame = () => {
     setGameOver(true);
+
+    if (insectIntervalId) clearInterval(insectIntervalId);
+
+    insects.forEach((insect) => {
+      insect.left.stopAnimation();
+      insect.top.stopAnimation();
+    });
+
+    setInsects([]);
     const scoreRef = ref(db, 'scores/' + username);
     set(scoreRef, { nombre: username, score })
       .then(() => {

@@ -84,12 +84,13 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#eaf1e2',
+    
   },
   container: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   backgroundVideoContainer: {
     position: 'absolute',
