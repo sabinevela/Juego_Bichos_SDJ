@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../Config/Config';
 
@@ -17,14 +17,13 @@ export default function Restablecer() {
         Alert.alert("Correo enviado", "Revisa tu bandeja de entrada.");
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        Alert.alert("Error", errorMessage);
+        Alert.alert("Error", error.message);
       });
   };
 
   return (
     <ImageBackground
-      source={require('../assets/bichosfondos.jpg')}
+      source={require('../assets/fondoregisttro.jpg')}
       style={styles.background}
     >
       <View style={styles.container}>
@@ -35,7 +34,7 @@ export default function Restablecer() {
           placeholderTextColor="#fff"
           style={styles.input}
           keyboardType="email-address"
-          onChangeText={(texto) => setCorreo(texto)}
+          onChangeText={setCorreo}
         />
 
         <TouchableOpacity 
@@ -84,21 +83,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    backgroundColor: '#388137',
+    backgroundColor: '#A8E6CF',
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
     marginTop: 20,
-    shadowColor: '#ff4081',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.3,
     shadowRadius: 10,
   },
   buttonText: {
-    color: 'white',
+    color: '#2F4F4F',
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
 });
+
