@@ -16,9 +16,11 @@
     "@react-navigation/native-stack": "^7.2.0",
     "@react-navigation/stack": "^7.1.1",
     "axios": "^1.7.9",
+    "Buffer": "^0.0.0",
     "expo": "~52.0.23",
     "expo-av": "~15.0.2",
     "expo-camera": "~16.0.11",
+    "expo-file-system": "~18.0.7",
     "expo-image-picker": "~16.0.4",
     "expo-status-bar": "~2.0.0",
     "firebase": "^11.1.0",
@@ -32,8 +34,7 @@
     "react-native-screens": "~4.4.0",
     "react-native-sound": "^0.11.2",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-video": "^6.9.1",
-    "expo-file-system": "~18.0.7"
+    "react-native-video": "^6.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -31,7 +31,7 @@ export default function CamaraScreen() {
 
       // Configuración para la subida a Dropbox
       const dropboxArg = {
-        path: `/${uniqueName}`, // Nombre único
+        path: `/carpetaimg/${uniqueName}`, // Nombre único
         mode: 'add',
         autorename: true,
         mute: false,
