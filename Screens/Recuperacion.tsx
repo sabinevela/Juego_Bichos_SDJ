@@ -3,7 +3,7 @@ import { Alert, StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpa
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../Config/Config';
 
-export default function Restablecer() {
+export default function Restablecer({ navigation}:any) {
   const [correo, setCorreo] = useState("");
 
   const restablecer = () => {
@@ -42,6 +42,13 @@ export default function Restablecer() {
           onPress={restablecer}
         >
           <Text style={styles.buttonText}>Enviar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.button, styles.backButton]} 
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.buttonText}>Volver</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -93,6 +100,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 10,
   },
+  backButton: {
+    backgroundColor: '#87C38F', 
+  },
   buttonText: {
     color: '#2F4F4F',
     fontSize: 18,
@@ -101,4 +111,5 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
 });
+
 
