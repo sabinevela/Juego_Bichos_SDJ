@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-nat
 import { Animated, TouchableOpacity } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
-import Sound from 'react-native-sound';
+
 
 const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
@@ -140,7 +140,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         return;
       }
 
-      // Cargar y reproducir el sonido al aplastar un insecto
       const sound = new Sound(require('../Screens/video/Aplastarelinsecto.mp3'), (error) => {
         if (error) {
           console.log('Error al cargar el sonido:', error);
