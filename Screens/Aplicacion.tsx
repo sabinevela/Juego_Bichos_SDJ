@@ -50,7 +50,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     Alert.alert(
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
-        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
+        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte:)!'
         : ''
     );
   };
