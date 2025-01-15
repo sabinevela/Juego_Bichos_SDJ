@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { Button, Image, View, StyleSheet, Text } from 'react-native';
+import { Button, Image, View, StyleSheet, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
+import * as FileSystem from 'expo-file-system';
 
 export default function CamaraScreen() {
   const [image, setImage] = useState<string | null>(null);
+  const [ImageUrl, setImageUrl] = useState("");
+
   // Subir imagen a Dropbox y obtener el enlace de la imagen
-  const subirImagen = async (nombre) => {
+  const subirImagen = async () => {
     if (!image) {
       Alert.alert('Error', 'Primero selecciona una imagen');
       return;
@@ -14,20 +18,20 @@ export default function CamaraScreen() {
     const ACCESS_TOKEN = token; // Token válido de Dropbox
 
     try {
+      // Generar un nombre único usando timestamp y un identificador aleatorio
+      const uniqueName = `imagen_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.jpg`;
+
       // Leer el archivo local como Base64
       const fileData = await FileSystem.readAsStringAsync(image, {
         encoding: FileSystem.EncodingType.Base64,
       });
 
       // Convertir Base64 a binario
-      const fileBuffer = Buffer.from(fileData, 'base64'); // Utiliza Buffer importado
+      const fileBuffer = Buffer.from(fileData, 'base64');
 
-      // Detectar el tipo MIME del archivo
-      const mimeType = mime.getType(image); // Detectar el tipo MIME basado en la extensión del archivo
-
-      // Crear los argumentos para la API de Dropbox
+      // Configuración para la subida a Dropbox
       const dropboxArg = {
-        path: `/${nombre}`, // Ruta donde se guardará el archivo
+        path: `/${uniqueName}`, // Nombre único
         mode: 'add',
         autorename: true,
         mute: false,
@@ -41,7 +45,7 @@ export default function CamaraScreen() {
           headers: {
             Authorization: `Bearer ${ACCESS_TOKEN}`,
             'Dropbox-API-Arg': JSON.stringify(dropboxArg),
-            'Content-Type': 'application/octet-stream', 
+            'Content-Type': 'application/octet-stream',
           },
         }
       );
@@ -49,7 +53,7 @@ export default function CamaraScreen() {
       console.log('Dropbox response:', result.data);
 
       // Después de la subida, obtener la URL de la imagen
-      const filePath = result.data.path_display; 
+      const filePath = result.data.path_display;
 
       // Solicitar el enlace de descarga del archivo
       const sharedLinkResult = await axios.post(
@@ -100,7 +104,7 @@ export default function CamaraScreen() {
       <Text style={styles.header}>¿Deseas conceder los permisos para activar la cámara?</Text>
       <Button title="Aceptar" onPress={pickImage} color="#FF6347" />
       {image && <Image source={{ uri: image }} style={styles.image} />}
-      <Button title="Subir Imagen"/>
+      <Button title="Subir Imagen" onPress={subirImagen} />
     </View>
   );
 }
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#1a1a1a',  
+    backgroundColor: '#1a1a1a',
     padding: 20,
   },
   header: {
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign:"center"
+    textAlign: "center",
   },
   image: {
     width: 300,
@@ -126,8 +130,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 15,
     borderWidth: 4,
-    borderColor: '#FF6347', 
-    shadowColor: '#000',  
+    borderColor: '#FF6347',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
