@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const GitHub = () => {
+  const navigation = useNavigation();
+
   return (
     <ImageBackground
       source={require('../Imagenes/fondogit.jpg')}
@@ -25,6 +28,11 @@ const GitHub = () => {
         <Text style={styles.name}>Joel Romero</Text>
         <Text style={styles.username}>@Joel-Romero</Text>
       </TouchableOpacity>
+
+      {/* Botón de Volver */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>Volver</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -43,7 +51,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 40,
   },
-
   title: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -51,7 +58,7 @@ const styles = StyleSheet.create({
     textShadowColor: '#000',
     textShadowOffset: { width: 0, height: 4 },
     textShadowRadius: 5,
-    textAlign:'center'
+    textAlign: 'center',
   },
   nameContainer: {
     marginVertical: 15,
@@ -75,6 +82,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#c6e0f2',
     marginTop: 5,
+  },
+  backButton: {
+    marginTop: 40,
+    backgroundColor: '#9da962',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  backButtonText: {
+    fontSize: 18,
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
 });
 
