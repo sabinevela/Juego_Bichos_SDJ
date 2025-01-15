@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 import { auth } from '../Config/Config';
-import { Video } from 'expo-av'; 
+import { Video } from 'expo-av';
 
 type LoginProps = {
   navigation: any;
@@ -36,9 +36,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         }
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        Alert.alert('Error', errorMessage);
+        Alert.alert('Error', error.message);
       });
   };
 
@@ -80,14 +78,14 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#6b8e23' }]}
+          style={[styles.button, { backgroundColor: '#B8E0D2' }]} // Verde pastel diferente
           onPress={() => navigation.navigate('Restaurar')}
         >
           <Text style={styles.buttonText}>Restablecer contraseña</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#007bff' }]}
+          style={[styles.button, { backgroundColor: '#A8D5BA' }]} // Otro verde pastel
           onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate</Text>
@@ -116,7 +114,7 @@ const styles = StyleSheet.create({
     width: '80%',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: 10,
   },
   title: {
@@ -141,18 +139,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    backgroundColor: '#eddcb7', 
+    backgroundColor: '#A8E6CF', // Verde pastel suave
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
     marginBottom: 15,
-    shadowColor: '#000', 
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.3,
     shadowRadius: 10,
   },
   buttonText: {
-    color: '#000',
+    color: '#2F4F4F', // Verde oscuro para contraste
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
