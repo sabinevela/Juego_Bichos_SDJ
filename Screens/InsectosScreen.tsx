@@ -10,6 +10,7 @@ const insectos = [
   { nombre: 'Mosca', imagen: require('../Imagenes/Insecto2.jpeg') },
   { nombre: 'Abeja', imagen: require('../Imagenes/Insecto3.jpeg') },
   { nombre: 'Mariposa', imagen: require('../Imagenes/Insecto4.jpeg') },
+  { nombre: 'Insecto Especial', imagen: require('../Imagenes/InsectoEspecial.png') },
 ];
 
 const InsectosScreen: React.FC<InsectosScreenProps> = ({ navigation }) => {

@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/bichoverde.jpg",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dafexd.juego_insectos"
     },
     "web": {
       "favicon": "./assets/bichoverde.jpg"

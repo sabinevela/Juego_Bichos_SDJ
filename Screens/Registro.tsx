@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ImageBackgr
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth } from '../Config/Config';
-import { Video } from 'expo-av'; // Usamos Expo Video para el fondo
+import { Video } from 'expo-av';
 
 type LoginProps = {
   navigation: any;
@@ -49,7 +49,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         rate={1.0}
         volume={1.0}
         isMuted={false}
-        resizeMode="cover"
+        resizeMode='cover'
         shouldPlay
         isLooping
         style={styles.backgroundVideo}
@@ -99,19 +99,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backgroundVideo: {
-    ...StyleSheet.absoluteFillObject, // Asegura que el video ocupe toda la pantalla
+    ...StyleSheet.absoluteFillObject, 
   },
   container: {
     width: '80%',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Fondo oscuro con transparencia para que el video se vea
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
     borderRadius: 10,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#eddcb7', // Color que mencionaste
+    color: '#eddcb7', 
     marginBottom: 30,
     textAlign: 'center',
     textShadowColor: 'black',
@@ -130,12 +130,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    backgroundColor: '#eddcb7', // Botones con el color combinado
+    backgroundColor: '#eddcb7', 
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
     marginBottom: 10,
-    shadowColor: '#000', // Sombra negra
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.9,
     shadowRadius: 10,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   buttonText: {
-    color: '#000', // Texto en color negro
+    color: '#000', 
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',

@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, Animated } from 'react-native';
-import { Video } from 'expo-av'; // Si usas Expo
-// import Video from 'react-native-video'; // Si no usas Expo
+import { Video } from 'expo-av'; 
+
 
 type PaginaPrincipalProps = {
   navigation: any;
 };
 
 const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
-  // Animación para el título
-  const [fadeAnim] = useState(new Animated.Value(0));  // Valor inicial para animación de opacidad
-  const [scaleAnim] = useState(new Animated.Value(0)); // Valor inicial para animación de escala de los botones
+  
+  const [fadeAnim] = useState(new Animated.Value(0));  
+  const [scaleAnim] = useState(new Animated.Value(0)); 
 
   useEffect(() => {
-    // Animación de opacidad para el título "BIENVENIDO"
+    
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1500,
       useNativeDriver: true,
     }).start();
 
-    // Animación de escala para los botones
+    
     Animated.spring(scaleAnim, {
       toValue: 1,
       friction: 4,
@@ -34,7 +34,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.backgroundVideoContainer}>
           <Video
-            source={require('../Screens/video/689955545a3fc679e8a8721c2fbbdb62.mp4')} // Ruta de tu video
+            source={require('../Screens/video/689955545a3fc679e8a8721c2fbbdb62.mp4')} 
             rate={1.0}
             volume={1.0}
             isMuted={false}
@@ -84,12 +84,13 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#eaf1e2',
+    
   },
   container: {
     flexGrow: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   backgroundVideoContainer: {
     position: 'absolute',
@@ -124,12 +125,12 @@ const styles = StyleSheet.create({
     textShadowRadius: 15,
   },
   botonEmpezar: {
-    backgroundColor: 'rgba(237, 220, 183, 0.7)', // Fondo de botón color #eddcb7 con transparencia
+    backgroundColor: 'rgba(237, 220, 183, 0.7)', 
     borderRadius: 50,
     paddingVertical: 18,
     paddingHorizontal: 50,
     marginBottom: 20,
-    shadowColor: '#000', // Sombra en negro
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.8,
     shadowRadius: 12,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.05 }],
   },
   buttonText: {
-    color: '#000', // Texto en color negro
+    color: '#000',
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',

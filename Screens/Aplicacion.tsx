@@ -10,6 +10,7 @@ const insectImages = [
   require('../Imagenes/Insecto3.jpeg'),
 ];
 const butterflyImage = require('../Imagenes/Insecto4.jpeg');
+const specialInsectImage = require('../Imagenes/InsectoEspecial.png');
 
 type AplicacionProps = {
   route: any;
@@ -23,9 +24,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [nivel, setNivel] = useState(1);
+  const [insectIntervalId, setInsectIntervalId] = useState<NodeJS.Timer | null>(null);
 
   useEffect(() => {
     const insectInterval = setInterval(() => generateInsects(), 3000);
+    setInsectIntervalId(insectInterval);
     return () => clearInterval(insectInterval);
   }, [nivel]);
 
@@ -33,14 +36,18 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     if (timeLeft === 0) {
       handleEndGame();
     } else {
-      const timer = setInterval(() => setTimeLeft(prevTime => prevTime - 1), 1000);
+      const timer = setInterval(() => setTimeLeft((prevTime) => prevTime - 1), 1000);
       return () => clearInterval(timer);
     }
   }, [timeLeft]);
 
   useEffect(() => {
-    if (score >= 20 && nivel === 1) {
+    if (score >= 5 && nivel === 1) {
       avanzarNivel(2);
+    } else if (score >= 10 && nivel === 2) {
+      avanzarNivel(3);
+    } else if (score >= 15 && nivel === 3) {
+      avanzarNivel(4);
     }
   }, [score]);
 
@@ -50,7 +57,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     Alert.alert(
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
-        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte:)!'
+        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
         : ''
     );
   };
@@ -58,8 +65,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const generateInsects = () => {
     if (gameOver) return;
 
-    const numInsects = nivel === 1 ? 3 : 5;
-    const velocidadMovimiento = nivel === 1 ? 2000 : 1000;
+    const maxInsects = 20;
+    if (insects.length >= maxInsects) return;
+
+    const numInsects = nivel === 1 ? 3 : nivel === 2 ? 5 : nivel === 3 ? 7 : 10;
+    const velocidadMovimiento = nivel === 1 ? 2000 : nivel === 2 ? 1500 : nivel === 3 ? 1000 : 500;
     const newInsects = [];
 
     for (let i = 0; i < numInsects; i++) {
@@ -82,12 +92,23 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       velocidad: velocidadMovimiento,
     });
 
-    setInsects(prevInsects => [...prevInsects, ...newInsects]);
+    if (nivel === 4) {
+      newInsects.push({
+        id: Math.random(),
+        left: new Animated.Value(Math.random() * 300),
+        top: new Animated.Value(Math.random() * 600),
+        image: specialInsectImage,
+        isSpecial: true,
+        velocidad: velocidadMovimiento,
+      });
+    }
+
+    setInsects((prevInsects) => [...prevInsects, ...newInsects]);
     moveInsects(newInsects);
   };
 
   const moveInsects = (insects: Array<any>) => {
-    insects.forEach(insect => moveInsect(insect));
+    insects.forEach((insect) => moveInsect(insect));
   };
 
   const moveInsect = (insect: any) => {
@@ -107,19 +128,33 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     ).start();
   };
 
-  const aplastarInsecto = (id: number, isButterfly: boolean) => {
+  const aplastarInsecto = (id: number, isButterfly: boolean, isSpecial: boolean) => {
     if (!gameOver) {
-      if (isButterfly) {
-        setScore(prevScore => Math.max(prevScore - 5, 0));
-      } else {
-        setScore(prevScore => prevScore + 1);
+      if (isSpecial) {
+        handleEndGame();
+        return;
       }
-      setInsects(insects.filter(insect => insect.id !== id));
+
+      if (isButterfly) {
+        setScore((prevScore) => Math.max(prevScore - 5, 0));
+      } else {
+        setScore((prevScore) => prevScore + 1);
+      }
+      setInsects(insects.filter((insect) => insect.id !== id));
     }
   };
 
   const handleEndGame = () => {
     setGameOver(true);
+
+    if (insectIntervalId) clearInterval(insectIntervalId);
+
+    insects.forEach((insect) => {
+      insect.left.stopAnimation();
+      insect.top.stopAnimation();
+    });
+
+    setInsects([]);
     const scoreRef = ref(db, 'scores/' + username);
     set(scoreRef, { nombre: username, score })
       .then(() => {
@@ -127,7 +162,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
           { text: "OK", onPress: () => navigation.navigate("Puntaje") },
         ]);
       })
-      .catch(error => Alert.alert('Error al guardar el score: ' + error.message));
+      .catch((error) => Alert.alert('Error al guardar el score: ' + error.message));
   };
 
   return (
@@ -143,7 +178,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         <Text style={styles.nivel}>Nivel: {nivel}</Text>
       </View>
 
-      {insects.map(insect => (
+      {insects.map((insect) => (
         <Animated.View
           key={insect.id}
           style={[
@@ -154,7 +189,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
           ]}
         >
           <TouchableOpacity
-            onPress={() => aplastarInsecto(insect.id, insect.isButterfly)}
+            onPress={() => aplastarInsecto(insect.id, insect.isButterfly, insect.isSpecial)}
           >
             <Image source={insect.image} style={styles.insectImage} />
           </TouchableOpacity>
