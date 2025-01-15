@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getDatabase, ref, get } from 'firebase/database';
 import { auth } from '../Config/Config';
-import { Video } from 'expo-av';
+import { Video, ResizeMode } from 'expo-av';
 
 type LoginProps = {
   navigation: any;
@@ -47,7 +47,7 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         rate={1.0}
         volume={1.0}
         isMuted={true}
-        resizeMode="cover"
+        resizeMode={ResizeMode.COVER} 
         shouldPlay
         isLooping
         style={styles.backgroundVideo}
@@ -78,14 +78,14 @@ const Inicio: React.FC<LoginProps> = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#B8E0D2' }]} // Verde pastel diferente
+          style={[styles.button, { backgroundColor: '#B8E0D2' }]} 
           onPress={() => navigation.navigate('Restaurar')}
         >
           <Text style={styles.buttonText}>Restablecer contraseña</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#A8D5BA' }]} // Otro verde pastel
+          style={[styles.button, { backgroundColor: '#A8D5BA' }]} 
           onPress={() => navigation.navigate('Register')}
         >
           <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate</Text>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   button: {
-    backgroundColor: '#A8E6CF', // Verde pastel suave
+    backgroundColor: '#A8E6CF',
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 50,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   buttonText: {
-    color: '#2F4F4F', // Verde oscuro para contraste
+    color: '#2F4F4F', 
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
