@@ -59,6 +59,10 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       `¡Nivel ${nuevoNivel}!`,
       nuevoNivel === 2
         ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
+        : nuevoNivel === 3
+        ? 'Los insectos se moverán aún más rápido, ¡Buena suerte!'
+        : nuevoNivel === 4
+        ? 'Los insectos se moverán mucho más rápido y un insecto especial terminará el juego si lo tocas.'
         : ''
     );
   };
