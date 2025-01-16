@@ -43,11 +43,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   }, [timeLeft]);
 
   useEffect(() => {
-    if (score >= 20 && nivel === 1) {
+    if (score >= 15 && nivel === 1) {
       avanzarNivel(2);
-    } else if (score >= 10 && nivel === 2) {
+    } else if (score >= 25 && nivel === 2) {
       avanzarNivel(3);
-    } else if (score >= 15 && nivel === 3) {
+    } else if (score >= 35 && nivel === 3) {
       avanzarNivel(4);
     }
   }, [score]);
