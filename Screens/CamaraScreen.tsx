@@ -10,7 +10,7 @@ export default function CamaraScreen() {
   const [image, setImage] = useState<string | null>(null);
   const [ImageUrl, setImageUrl] = useState("");
 
-  // Subir imagen a Dropbox y obtener el enlace de la imagen
+  // Subir imagen a Dropbox y obtener el enlace de la foto
   const subirImagen = async () => {
     if (!image) {
       Alert.alert('Error', 'Primero selecciona una imagen');
