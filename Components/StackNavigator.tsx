@@ -14,6 +14,7 @@ import Perfil from '../Screens/Perfil';
 import InsectosScreen from '../Screens/InsectosScreen';
 import Playerrr from '../Screens/Playerrr';
 import CamaraScreen from '../Screens/CamaraScreen';
+import BrutalBossLevel from '../Screens/Boss';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ export default function AppNavegador() {
         <Stack.Screen name="Camara" component={CamaraScreen} />
         <Stack.Screen name="Insectos" component={InsectosScreen} />
         <Stack.Screen name="Score" component={Playerrr} />
+        <Stack.Screen name="Final" component={BrutalBossLevel} />
       </Stack.Navigator>
     </NavigationContainer>
   );
