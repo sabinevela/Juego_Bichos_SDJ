@@ -27,12 +27,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const [nivel, setNivel] = useState(1);
   const [insectIntervalId, setInsectIntervalId] = useState<NodeJS.Timer | null>(null);
 
-  // Fondos para cada nivel
   const backgroundImages = [
-    require('../Fondos/68821802-hermoso-paisaje-de-pradera-de-montaña-vector-ilustración-de-dibujos-animados-al-aire-libre-fondo.jpg'), // Fondo nivel 1
-    require('../Fondos/78092141-paisaje-de-naturaleza-vertical-de-dibujos-animados-día-soleado-de-fondo-para-el-diseño-del-juego.jpg'),    // Fondo nivel 2
-    require('../Fondos/aa8da9413fe57e4e64ff50141ad77435.jpg'),    // Fondo nivel 3
-    require('../Fondos/depositphotos_164252252-stock-illustration-vertical-landscape-with-river.jpg'),    // Fondo nivel 4
+    require('../Fondos/68821802-hermoso-paisaje-de-pradera-de-montaña-vector-ilustración-de-dibujos-animados-al-aire-libre-fondo.jpg'),
+    require('../Fondos/78092141-paisaje-de-naturaleza-vertical-de-dibujos-animados-día-soleado-de-fondo-para-el-diseño-del-juego.jpg'),
+    require('../Fondos/aa8da9413fe57e4e64ff50141ad77435.jpg'),
+    require('../Fondos/depositphotos_164252252-stock-illustration-vertical-landscape-with-river.jpg'),
   ];
 
   const backgroundImage = backgroundImages[nivel - 1];
@@ -65,21 +64,11 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const avanzarNivel = (nuevoNivel: number) => {
     setNivel(nuevoNivel);
     setInsects([]);
-    Alert.alert(
-      `¡Nivel ${nuevoNivel}!`,
-      nuevoNivel === 2
-        ? 'Los insectos se moverán más rápido y habrá más por ronda. ¡Buena suerte!'
-        : nuevoNivel === 3
-        ? 'Los insectos se moverán aún más rápido, ¡Buena suerte!'
-        : nuevoNivel === 4
-        ? 'Los insectos se moverán mucho más rápido y un insecto especial terminará el juego si lo tocas.'
-        : ''
-    );
+    Alert.alert(`¡Nivel ${nuevoNivel}!`, '¡Buena suerte!');
   };
 
   const generateInsects = () => {
     if (gameOver) return;
-
     const maxInsects = 20;
     if (insects.length >= maxInsects) return;
 
@@ -98,26 +87,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
       });
     }
 
-    newInsects.push({
-      id: Math.random(),
-      left: new Animated.Value(Math.random() * 300),
-      top: new Animated.Value(Math.random() * 600),
-      image: butterflyImage,
-      isButterfly: true,
-      velocidad: velocidadMovimiento,
-    });
-
-    if (nivel === 4) {
-      newInsects.push({
-        id: Math.random(),
-        left: new Animated.Value(Math.random() * 300),
-        top: new Animated.Value(Math.random() * 600),
-        image: specialInsectImage,
-        isSpecial: true,
-        velocidad: velocidadMovimiento,
-      });
-    }
-
     setInsects((prevInsects) => [...prevInsects, ...newInsects]);
     moveInsects(newInsects);
   };
@@ -128,7 +97,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   const moveInsect = (insect: any) => {
     Animated.loop(
-      Animated.sequence([ 
+      Animated.sequence([
         Animated.timing(insect.left, {
           toValue: Math.random() * 300,
           duration: insect.velocidad,
@@ -143,54 +112,26 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     ).start();
   };
 
-  const aplastarInsecto = (id: number, isButterfly: boolean, isSpecial: boolean) => {
-    if (!gameOver) {
-      if (isSpecial) {
-        handleEndGame();
-        return;
-      }
-
-      if (isButterfly) {
-        setScore((prevScore) => Math.max(prevScore - 5, 0));
-      } else {
-        setScore((prevScore) => prevScore + 1);
-      }
-      setInsects(insects.filter((insect) => insect.id !== id));
-    }
+  const aplastarInsecto = (id: number) => {
+    setScore((prevScore) => prevScore + 1);
+    setInsects(insects.filter((insect) => insect.id !== id));
   };
 
   const handleEndGame = () => {
     setGameOver(true);
-
     if (insectIntervalId) clearInterval(insectIntervalId);
-
-    insects.forEach((insect) => {
-      insect.left.stopAnimation();
-      insect.top.stopAnimation();
-    });
-
     setInsects([]);
-    const scoreRef = ref(db, 'scores/' + username);
-    set(scoreRef, { nombre: username, score })
-      .then(() => {
-        Alert.alert("Juego terminado", `¡${username}, tu puntaje final es: ${score}!`, [
-          { text: "OK", onPress: () => navigation.navigate("Puntaje") },
-        ]);
-      })
-      .catch((error) => Alert.alert('Error al guardar el score: ' + error.message));
+    Alert.alert('Juego terminado', `Tu puntaje final es: ${score}`, [
+      { text: 'OK', onPress: () => navigation.navigate('Puntaje') },
+    ]);
   };
 
   return (
-    <ImageBackground
-      source={backgroundImage}  // Usamos la imagen correspondiente al nivel
-      style={styles.container}
-    >
+    <ImageBackground source={backgroundImage} style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>¡Aplasta los insectos!</Text>
         <Text style={styles.score}>Puntaje: {score}</Text>
         <Text style={styles.time}>Tiempo Restante: {timeLeft} segundos</Text>
-        <Text style={styles.username}>Jugador: {username}</Text>
-        <Text style={styles.nivel}>Nivel: {nivel}</Text>
       </View>
 
       {insects.map((insect) => (
@@ -203,9 +144,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
             },
           ]}
         >
-          <TouchableOpacity
-            onPress={() => aplastarInsecto(insect.id, insect.isButterfly, insect.isSpecial)}
-          >
+          <TouchableOpacity onPress={() => aplastarInsecto(insect.id)}>
             <Image source={insect.image} style={styles.insectImage} />
           </TouchableOpacity>
         </Animated.View>
@@ -250,14 +189,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#FFD700',
   },
-  username: {
-    fontSize: 20,
-    color: '#FFD700',
-  },
-  nivel: {
-    fontSize: 20,
-    color: '#FF6347',
-  },
   insect: {
     position: 'absolute',
     width: 70,
@@ -271,18 +202,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     width: '100%',
     paddingHorizontal: 10,
   },
   endButton: {
     backgroundColor: '#ff6347',
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 10,
+    width: '22%', // Tamaño ajustado para que los 4 botones quepan
+    alignItems: 'center',
   },
   endButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 12,
+    textAlign: 'center',
   },
 });
 

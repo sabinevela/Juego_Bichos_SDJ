@@ -11,12 +11,10 @@
       "image": "./assets/bichoverde.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-      
     },
     "ios": {
       "supportsTablet": true
     },
-    
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/bichoverde.jpg",
@@ -26,7 +24,11 @@
     },
     "web": {
       "favicon": "./assets/bichoverde.jpg"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "64ecba64-4fad-49f1-912b-420cffe4102f"
+      }
     }
   }
 }
-
