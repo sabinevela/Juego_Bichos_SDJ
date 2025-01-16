@@ -3,8 +3,9 @@ import { Button, Image, View, StyleSheet, Text, Alert, TouchableOpacity, Linking
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
-import { token } from '../Components/Secrets';
+
 import { Buffer } from 'buffer';
+import { token } from '../Config/Secrets';
 
 export default function CamaraScreen() {
   const [image, setImage] = useState<string | null>(null);

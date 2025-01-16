@@ -27,8 +27,20 @@ export default function BossLevel() {
       const randomX = Math.random() * screenWidth * 1.5 - screenWidth * 0.25; // Puede salir por la izquierda/derecha
       const randomY = Math.random() * screenHeight * 1.5 - screenHeight * 0.25; // Puede salir por arriba/abajo
 
+<<<<<<< HEAD
       // Determinar si el jefe será visible o invisible
       const shouldDisappear = Math.random() < 0.3; // 30% de probabilidad de desaparecer
+=======
+  useEffect(() => {
+    if (score >= 15 && nivel === 1) {
+      avanzarNivel(2);
+    } else if (score >= 25 && nivel === 2) {
+      avanzarNivel(3);
+    } else if (score >= 35 && nivel === 3) {
+      avanzarNivel(4);
+    }
+  }, [score]);
+>>>>>>> 94f726ac78fc848b41b8b0ee68dc87bf5d4cb0d0
 
       setIsBossVisible(!shouldDisappear); // Cambia la visibilidad del jefe
 
