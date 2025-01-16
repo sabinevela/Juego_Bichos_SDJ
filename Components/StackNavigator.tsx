@@ -10,7 +10,7 @@ import PaginaPrincipal from '../Screens/PaginaPrincipal';
 import GitHub from '../Screens/GitHub';
 import Restablecer from '../Screens/Recuperacion';
 import Perfil from '../Screens/Perfil';
-import CamaraScreen from '../Screens/CamaraScreen';
+
 import InsectosScreen from '../Screens/InsectosScreen';
 import Playerrr from '../Screens/Playerrr';
 

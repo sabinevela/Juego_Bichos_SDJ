@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-nat
 import { Animated, TouchableOpacity } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
-
+import Sound from 'react-native-sound';
 
 const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
   require('../Imagenes/Insecto2.jpeg'),
   require('../Imagenes/Insecto3.jpeg'),
+  require('../Imagenes/Insecto4.jpeg'),
 ];
 const butterflyImage = require('../Imagenes/Insecto4.jpeg');
 const specialInsectImage = require('../Imagenes/InsectoEspecial.png');

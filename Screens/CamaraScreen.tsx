@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
 import { token } from '../Config/Secrets';
-import { Buffer } from 'buffer';
+
 
 export default function CamaraScreen() {
   const [image, setImage] = useState<string | null>(null);
