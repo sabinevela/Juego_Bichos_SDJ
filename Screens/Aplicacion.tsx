@@ -4,7 +4,6 @@ import { Animated, TouchableOpacity } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
 
-
 const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
   require('../Imagenes/Insecto2.jpeg'),
@@ -27,6 +26,16 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   const [gameOver, setGameOver] = useState(false);
   const [nivel, setNivel] = useState(1);
   const [insectIntervalId, setInsectIntervalId] = useState<NodeJS.Timer | null>(null);
+
+  // Fondos para cada nivel
+  const backgroundImages = [
+    require('../Fondos/68821802-hermoso-paisaje-de-pradera-de-montaña-vector-ilustración-de-dibujos-animados-al-aire-libre-fondo.jpg'), // Fondo nivel 1
+    require('../Imagenes/fondoNivel2.jpg'),    // Fondo nivel 2
+    require('../Imagenes/fondoNivel3.jpg'),    // Fondo nivel 3
+    require('../Imagenes/fondoNivel4.jpg'),    // Fondo nivel 4
+  ];
+
+  const backgroundImage = backgroundImages[nivel - 1];
 
   useEffect(() => {
     const insectInterval = setInterval(() => generateInsects(), 3000);
@@ -141,8 +150,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         return;
       }
 
-    
-
       if (isButterfly) {
         setScore((prevScore) => Math.max(prevScore - 5, 0));
       } else {
@@ -175,7 +182,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../Imagenes/imagenaplicacion.jpg')}
+      source={backgroundImage}  // Usamos la imagen correspondiente al nivel
       style={styles.container}
     >
       <View style={styles.header}>
@@ -213,6 +220,9 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Perfil')}>
           <Text style={styles.endButtonText}>Ver Perfil</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.endButton} onPress={() => navigation.navigate('Final')}>
+          <Text style={styles.endButtonText}>Extra</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

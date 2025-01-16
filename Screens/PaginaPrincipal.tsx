@@ -53,7 +53,7 @@ const PaginaPrincipal: React.FC<PaginaPrincipalProps> = ({ navigation }) => {
           {/* Botones con animación de escala */}
           <Animated.View style={[styles.botonEmpezar, { transform: [{ scale: scaleAnim }] }]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Final')}
+              onPress={() => navigation.navigate('Welcome')}
             >
               <Text style={styles.buttonText}>Iniciar Juego</Text>
             </TouchableOpacity>

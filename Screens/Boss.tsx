@@ -13,49 +13,36 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default function BossLevel() {
-  const [bossHealth, setBossHealth] = useState(300);
+  const [bossHealth, setBossHealth] = useState(300); // Vida inicial del jefe
   const bossPosition = useState(new Animated.ValueXY({ x: 0, y: 0 }))[0];
   const [isBossVisible, setIsBossVisible] = useState(true);
-  const [bossStage, setBossStage] = useState(1);
-  const [dialogVisible, setDialogVisible] = useState(false);
-  const [randomImage, setRandomImage] = useState(null);
-  const [imageChangeInterval, setImageChangeInterval] = useState(null);
-  const [incorrectImageTouched, setIncorrectImageTouched] = useState(false);
-  const [touchCount, setTouchCount] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10);
-  const [gameOver, setGameOver] = useState(false);
-  const [warningMessage, setWarningMessage] = useState('');
-  const [phase4Timer, setPhase4Timer] = useState(10);
+  const [bossStage, setBossStage] = useState(1); // Etapa inicial
+  const [dialogVisible, setDialogVisible] = useState(false); // Mostrar diálogo
+  const [randomImage, setRandomImage] = useState(null); // Imagen aleatoria
+  const [imageChangeInterval, setImageChangeInterval] = useState(null); // Controlar el cambio de imagen
+  const [incorrectImageTouched, setIncorrectImageTouched] = useState(false); // Verifica si se tocó la imagen incorrecta
+  const [touchCount, setTouchCount] = useState(0); // Contador de toques
+  const [timeLeft, setTimeLeft] = useState(10); // Temporizador de 10 segundos
+  const [gameOver, setGameOver] = useState(false); // Si el juego ha terminado
 
   useEffect(() => {
-    startBossBehavior();
+    startBossBehavior(); // Inicia el comportamiento del jefe al montar el componente
   }, []);
 
   useEffect(() => {
     if (bossStage === 3) {
+      // Iniciar el temporizador solo cuando el jefe esté en la fase 3
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime === 1) {
             clearInterval(timer);
-            setGameOver(true);
+            setGameOver(true); // Fin del juego si el tiempo se acaba
           }
           return prevTime - 1;
         });
       }, 1000);
-      return () => clearInterval(timer);
-    }
-    if (bossStage === 4) {
-      const phase4Interval = setInterval(() => {
-        setPhase4Timer((prevTime) => {
-          if (prevTime === 0) {
-            clearInterval(phase4Interval);
-            if (touchCount < 50) {
-              setGameOver(true);
-            }
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
+
+      return () => clearInterval(timer); // Limpiar el temporizador
     }
   }, [bossStage]);
 
@@ -65,11 +52,12 @@ export default function BossLevel() {
       const randomY = Math.random() * screenHeight * 1.6 - screenHeight * 0.3;
 
       const shouldDisappear = Math.random() < 0.2;
+
       setIsBossVisible(!shouldDisappear);
 
       Animated.timing(bossPosition, {
         toValue: { x: randomX, y: randomY },
-        duration: shouldDisappear ? 1000 : 600,
+        duration: shouldDisappear ? 1000 : 600, // Más lento
         useNativeDriver: false,
       }).start(() => {
         moveBossContinuously();
@@ -85,37 +73,36 @@ export default function BossLevel() {
         const newHealth = Math.max(prevHealth - 20, 0);
 
         if (newHealth === 150 && bossStage === 1) {
-          setDialogVisible(true);
-          return newHealth;
+          setDialogVisible(true); // Mostrar diálogo
+          return newHealth; // Mantener la vida para el cambio de etapa
         }
 
         return newHealth;
       });
 
       if (bossHealth - 20 <= 0 && bossStage < 3) {
-        moveToNextStage();
+        moveToNextStage(); // Cambiar a la siguiente etapa
       }
     }
   };
 
   const moveToNextStage = () => {
-    setDialogVisible(false);
+    setDialogVisible(false); // Ocultar cualquier diálogo
     setBossStage((prevStage) => prevStage + 1);
 
     if (bossStage === 1) {
-      setBossHealth(300);
+      setBossHealth(300); // Regenerar vida para la etapa 2
       startImageChangePhase2();
-      setWarningMessage("Fase 2: ¡Imágenes especiales! Toca las correctas para cambiar la vida del jefe.");
     } else if (bossStage === 2) {
-      setBossHealth(300);
+      setBossHealth(300); // Regenerar vida para la fase 3
       startImageChangePhase3();
-      setWarningMessage("Fase 3: ¡Más imágenes! Cuidado, una imagen puede hacerte perder vida.");
     } else if (bossStage === 3) {
-      setWarningMessage("Fase 4: ¡Última fase! Toca la imagen 50 veces en 10 segundos para ganar.");
-      setRandomImage(require('../Imagenes/Fondo1.jpeg'));
+      setBossHealth(300); // Regenerar vida para la fase 4
+      startStaticPhase4();
     }
   };
 
+  // Fase 2 - Cambio de imágenes lento
   const startImageChangePhase2 = () => {
     setImageChangeInterval(
       setInterval(() => {
@@ -125,10 +112,11 @@ export default function BossLevel() {
         } else {
           setRandomImage(require('../Imagenes/InsectoDios.webp'));
         }
-      }, 500)
+      }, 1000) // Cambia de imagen cada 1 segundo
     );
   };
 
+  // Fase 3 - Cambio de imágenes lento, pero más lento que la fase 2
   const startImageChangePhase3 = () => {
     setImageChangeInterval(
       setInterval(() => {
@@ -140,33 +128,33 @@ export default function BossLevel() {
         } else {
           setRandomImage(require('../Imagenes/bicho_pagina_principal-removebg-preview.png'));
         }
-      }, 700)
+      }, 1500) // Cambia de imagen cada 1.5 segundos
     );
+  };
+
+  // Fase 4 - Imagen estática
+  const startStaticPhase4 = () => {
+    setRandomImage(require('../Imagenes/InsectoDios.webp')); // Imagen estática para la fase 4
+    setTouchCount(0); // Reiniciar contador de toques
+    setTimeLeft(10); // Restablecer el temporizador
   };
 
   const handleImageTouch = () => {
     if (randomImage === require('../Imagenes/bicho_pagina_principal-removebg-preview.png')) {
-      setIncorrectImageTouched(true);
-      setTimeout(() => setIncorrectImageTouched(false), 2000);
+      setIncorrectImageTouched(true); // Se tocó la imagen incorrecta
+      setTimeout(() => setIncorrectImageTouched(false), 2000); // Mostrar advertencia por 2 segundos
     } else {
-      setTouchCount((prevCount) => prevCount + 1);
+      setTouchCount((prevCount) => prevCount + 1); // Aumentar el contador de toques
     }
 
     if (touchCount >= 50) {
-      setGameOver(true);
+      setGameOver(true); // El jugador ganó si toca 50 veces
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>¡Nivel Brutal: Derrota al Jefe Final!</Text>
-
-      {/* Mensaje de advertencia */}
-      {warningMessage && (
-        <View style={styles.warningDialog}>
-          <Text style={styles.warningText}>{warningMessage}</Text>
-        </View>
-      )}
 
       {/* Jefe */}
       {isBossVisible && (
@@ -191,7 +179,10 @@ export default function BossLevel() {
       {/* Barra de salud */}
       <View style={styles.healthBarContainer}>
         <View
-          style={[styles.healthBar, { width: `${bossHealth}%`, backgroundColor: bossHealth > 50 ? 'green' : 'red' }]}
+          style={[
+            styles.healthBar,
+            { width: `${bossHealth}%`, backgroundColor: bossHealth > 50 ? 'green' : 'red' },
+          ]}
         />
       </View>
 
@@ -210,11 +201,24 @@ export default function BossLevel() {
       )}
 
       {/* Temporizador */}
-      {bossStage === 3 && !gameOver && (
+      {bossStage === 4 && !gameOver && (
         <Text style={styles.timer}>Tiempo restante: {timeLeft} segundos</Text>
       )}
-      {bossStage === 4 && !gameOver && (
-        <Text style={styles.timer}>Tiempo restante: {phase4Timer} segundos</Text>
+
+      {/* Diálogo */}
+      {dialogVisible && (
+        <View style={styles.dialog}>
+          <Text style={styles.dialogText}>¡No es tan fácil derrotarme!</Text>
+          <TouchableOpacity
+            style={styles.dialogButton}
+            onPress={() => {
+              setDialogVisible(false);
+              setBossHealth(300); // Regenerar vida después del diálogo
+            }}
+          >
+            <Text style={styles.dialogButtonText}>Continuar</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -242,50 +246,68 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: 'gray',
     borderRadius: 10,
-    overflow: 'hidden',
   },
   healthBar: {
     height: '100%',
     borderRadius: 10,
   },
+  warningDialog: {
+    position: 'absolute',
+    top: '40%',
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+  },
+  warningText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  winDialog: {
+    position: 'absolute',
+    top: '40%',
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+  },
+  winText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  timer: {
+    position: 'absolute',
+    top: 20,
+    color: 'white',
+    fontSize: 20,
+  },
+  dialog: {
+    position: 'absolute',
+    top: '40%',
+    backgroundColor: 'yellow',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  dialogText: {
+    fontSize: 18,
+    color: 'black',
+  },
+  dialogButton: {
+    backgroundColor: 'green',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 5,
+  },
+  dialogButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
   bossContainer: {
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   boss: {
     width: 150,
     height: 150,
-    resizeMode: 'contain',
-  },
-  warningDialog: {
-    position: 'absolute',
-    top: screenHeight / 3,
-    left: screenWidth / 4,
-    backgroundColor: 'red',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  warningText: {
-    fontSize: 18,
-    color: 'white',
-  },
-  winDialog: {
-    position: 'absolute',
-    top: screenHeight / 3,
-    left: screenWidth / 4,
-    backgroundColor: 'green',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  winText: {
-    fontSize: 18,
-    color: 'white',
-  },
-  timer: {
-    fontSize: 18,
-    color: 'white',
-    position: 'absolute',
-    top: 10,
   },
 });
