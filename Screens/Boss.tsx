@@ -112,7 +112,7 @@ export default function BossLevel() {
       setWarningMessage("Fase 3: ¡Más imágenes! Cuidado, una imagen puede hacerte perder vida.");
     } else if (bossStage === 3) {
       setWarningMessage("Fase 4: ¡Última fase! Toca la imagen 50 veces en 10 segundos para ganar.");
-      setRandomImage(require('../Imagenes/Insecto1.jpeg'));
+      setRandomImage(require('../Imagenes/Fondo1.jpeg'));
     }
   };
 
