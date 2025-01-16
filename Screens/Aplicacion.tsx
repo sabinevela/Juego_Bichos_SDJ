@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ImageBackground, Image, Alert } from 'react-nat
 import { Animated, TouchableOpacity } from 'react-native';
 import { ref, set } from 'firebase/database';
 import { db } from '../Config/Config';
-import Sound from 'react-native-sound';
 
 const insectImages = [
   require('../Imagenes/Insecto1.jpeg'),
@@ -119,7 +118,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
 
   const moveInsect = (insect: any) => {
     Animated.loop(
-      Animated.sequence([ 
+      Animated.sequence([
         Animated.timing(insect.left, {
           toValue: Math.random() * 300,
           duration: insect.velocidad,
@@ -140,14 +139,6 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
         handleEndGame();
         return;
       }
-
-      const sound = new Sound(require('../Screens/video/Aplastarelinsecto.mp3'), (error) => {
-        if (error) {
-          console.log('Error al cargar el sonido:', error);
-        } else {
-          sound.play();
-        }
-      });
 
       if (isButterfly) {
         setScore((prevScore) => Math.max(prevScore - 5, 0));

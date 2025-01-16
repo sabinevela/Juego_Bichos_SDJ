@@ -13,6 +13,7 @@ import Perfil from '../Screens/Perfil';
 
 import InsectosScreen from '../Screens/InsectosScreen';
 import Playerrr from '../Screens/Playerrr';
+import CamaraScreen from '../Screens/CamaraScreen';
 
 const Stack = createStackNavigator();
 
