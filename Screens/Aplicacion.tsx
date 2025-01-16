@@ -32,7 +32,7 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
     require('../Fondos/68821802-hermoso-paisaje-de-pradera-de-montaña-vector-ilustración-de-dibujos-animados-al-aire-libre-fondo.jpg'), // Fondo nivel 1
     require('../Fondos/78092141-paisaje-de-naturaleza-vertical-de-dibujos-animados-día-soleado-de-fondo-para-el-diseño-del-juego.jpg'),    // Fondo nivel 2
     require('../Fondos/aa8da9413fe57e4e64ff50141ad77435.jpg'),    // Fondo nivel 3
-    require('../Imagenes/fondoNivel4.jpg'),    // Fondo nivel 4
+    require('../Fondos/depositphotos_164252252-stock-illustration-vertical-landscape-with-river.jpg'),    // Fondo nivel 4
   ];
 
   const backgroundImage = backgroundImages[nivel - 1];
