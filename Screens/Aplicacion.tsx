@@ -30,8 +30,8 @@ const Aplicacion: React.FC<AplicacionProps> = ({ route, navigation }) => {
   // Fondos para cada nivel
   const backgroundImages = [
     require('../Fondos/68821802-hermoso-paisaje-de-pradera-de-montaña-vector-ilustración-de-dibujos-animados-al-aire-libre-fondo.jpg'), // Fondo nivel 1
-    require('../Imagenes/fondoNivel2.jpg'),    // Fondo nivel 2
-    require('../Imagenes/fondoNivel3.jpg'),    // Fondo nivel 3
+    require('../Fondos/78092141-paisaje-de-naturaleza-vertical-de-dibujos-animados-día-soleado-de-fondo-para-el-diseño-del-juego.jpg'),    // Fondo nivel 2
+    require('../Fondos/aa8da9413fe57e4e64ff50141ad77435.jpg'),    // Fondo nivel 3
     require('../Imagenes/fondoNivel4.jpg'),    // Fondo nivel 4
   ];
 
